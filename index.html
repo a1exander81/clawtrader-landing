@@ -125,6 +125,16 @@ footer{padding:2.5rem 3rem;border-top:1px solid var(--border);display:flex;justi
 .reveal{opacity:0;transform:translateY(32px);transition:all 0.6s ease}
 .reveal.vis{opacity:1;transform:translateY(0)}
 @media(max-width:900px){#hero{grid-template-columns:1fr;padding:5rem 1.5rem 3rem;text-align:center}.hero-desc{max-width:100%}.hero-actions{justify-content:center}.hero-numbers{justify-content:center}.hero-right{display:none}nav{padding:1rem 1.5rem}.nav-links{display:none}.section{padding:5rem 1.5rem}.feat-layout{grid-template-columns:1fr}footer{flex-direction:column;text-align:center}}
+
+.ticker-wrap{width:100%;overflow:hidden;background:rgba(255,85,0,0.04);border-top:1px solid rgba(255,85,0,0.1);border-bottom:1px solid rgba(255,85,0,0.1);padding:0.75rem 0}
+.ticker-track{display:flex;animation:tickerMove 30s linear infinite;width:max-content}
+.ticker-track:hover{animation-play-state:paused}
+.ticker-item{display:flex;align-items:center;gap:8px;padding:0 2.5rem;border-right:1px solid rgba(255,255,255,0.06);white-space:nowrap;font-size:0.8rem;font-weight:500;color:var(--text);transition:color 0.2s}
+.ticker-item:hover{color:var(--white)}
+@keyframes tickerMove{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.social-links{display:flex;gap:0.75rem;align-items:center}
+.social-link{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:0.9rem;transition:all 0.2s}
+.social-link:hover{background:rgba(255,85,0,0.1);border-color:var(--claw);transform:translateY(-2px)}
 </style>
 </head>
 <body>
@@ -261,6 +271,7 @@ footer{padding:2.5rem 3rem;border-top:1px solid var(--border);display:flex;justi
   </div>
 </section>
 
+<div class="ticker-wrap"><div class="ticker-track"><div class="ticker-item">📊 Bybit</div><div class="ticker-item">📈 Binance</div><div class="ticker-item">⚡ BingX</div><div class="ticker-item">🤖 Freqtrade</div><div class="ticker-item">🧠 StepFun AI</div><div class="ticker-item">✈️ Telegram</div><div class="ticker-item">🔗 Solana</div><div class="ticker-item">▲ Vercel</div><div class="ticker-item">🐙 GitHub</div><div class="ticker-item">🐳 Docker</div><div class="ticker-item">🐍 Python</div><div class="ticker-item">⚙️ Next.js</div><div class="ticker-item">📊 Bybit</div><div class="ticker-item">📈 Binance</div><div class="ticker-item">⚡ BingX</div><div class="ticker-item">🤖 Freqtrade</div><div class="ticker-item">🧠 StepFun AI</div><div class="ticker-item">✈️ Telegram</div><div class="ticker-item">🔗 Solana</div><div class="ticker-item">▲ Vercel</div><div class="ticker-item">🐙 GitHub</div><div class="ticker-item">🐳 Docker</div><div class="ticker-item">🐍 Python</div><div class="ticker-item">⚙️ Next.js</div></div></div>
 <footer>
   <div class="footer-logo">🦞 CLAW<span>TRADER</span></div>
   <ul class="footer-links">
@@ -269,6 +280,13 @@ footer{padding:2.5rem 3rem;border-top:1px solid var(--border);display:flex;justi
     <li><a href="https://clawmimoto-backtests.vercel.app" target="_blank">Dashboard</a></li>
     <li><a href="https://github.com/a1exander81/clawmimoto_bot" target="_blank">GitHub</a></li>
   </ul>
+  <div class="social-links">
+    <a href="https://t.me/RightclawTrade" target="_blank" class="social-link" title="Channel">✈️</a>
+    <a href="https://t.me/Clawmimoto_bot" target="_blank" class="social-link" title="Bot">🤖</a>
+    <a href="https://github.com/a1exander81/clawmimoto_bot" target="_blank" class="social-link" title="GitHub">🐙</a>
+    <a href="https://x.com" target="_blank" class="social-link" title="X">𝕏</a>
+    <a href="https://clawmimoto-backtests.vercel.app" target="_blank" class="social-link" title="Dashboard">📊</a>
+  </div>
   <div class="footer-copy">© 2026 Claw Trader · Not financial advice.</div>
 </footer>
 
