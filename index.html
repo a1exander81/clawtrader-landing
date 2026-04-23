@@ -168,6 +168,32 @@ html,body{max-width:100%;overflow-x:hidden}
   .ticker-item{padding:0 1.5rem!important}
   .cta-box,.cta-inner{padding:3rem 1rem!important}
 }
+
+/* Glassy cards */
+.sess-card,.how-item,.feat-item,.feat-visual{
+  background:rgba(255,255,255,0.03)!important;
+  backdrop-filter:blur(16px)!important;
+  -webkit-backdrop-filter:blur(16px)!important;
+  border:1px solid rgba(255,255,255,0.08)!important;
+  transform-style:preserve-3d;
+  transition:transform 0.4s ease, box-shadow 0.4s ease, border-color 0.3s!important;
+  will-change:transform;
+}
+[data-theme="light"] .sess-card,[data-theme="light"] .how-item,[data-theme="light"] .feat-item{
+  background:rgba(255,255,255,0.6)!important;
+  border:1px solid rgba(0,0,0,0.08)!important;
+}
+.sess-card:hover,.feat-item:hover{
+  box-shadow:0 20px 60px rgba(255,85,0,0.12),0 0 0 1px rgba(255,85,0,0.15)!important;
+  border-color:rgba(255,85,0,0.25)!important;
+}
+
+.ticker-section-label{font-family:var(--mono);font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.2em;padding:1rem 2rem 0.25rem;opacity:0.5}
+.ticker-wrap-reverse{border-top:none!important}
+.ticker-track-reverse{animation:tickerMoveReverse 25s linear infinite}
+@keyframes tickerMoveReverse{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+.ticker-social-icon{font-size:1.1rem}
+.ticker-social .ticker-name{font-size:0.75rem}
 </style>
 </head>
 <body>
@@ -179,7 +205,7 @@ html,body{max-width:100%;overflow-x:hidden}
     <li><a href="#features">Features</a></li>
     <li><a href="https://clawmimoto-backtests.vercel.app" target="_blank">Live Data</a></li>
   </ul>
-  <a href="https://t.me/RightclawTrade" target="_blank" class="nav-btn">Join Channel →</a>
+  <a href="https://t.me/RightclawTrade" target="_blank" class="nav-btn">📡 Join @RightclawTrade →</a>
 </nav>
 
 <section id="hero">
@@ -299,12 +325,15 @@ html,body{max-width:100%;overflow-x:hidden}
     <p class="cta-sub reveal">Join @RightclawTrade for signals. Connect @Clawmimoto to start. Your capital, your custody, our edge.</p>
     <div class="cta-actions reveal">
       <a href="https://t.me/RightclawTrade" target="_blank" class="btn-fill">📡 Join Channel</a>
-      <a href="https://t.me/Clawmimoto_bot" target="_blank" class="btn-ghost">🤖 Open Bot</a>
+      <a href="https://clawmimoto-backtests.vercel.app" target="_blank" class="btn-ghost">📊 View Dashboard</a>
     </div>
   </div>
 </section>
 
-<div class="ticker-wrap"><div class="ticker-track"><a href="https://bybit.com" target="_blank" class="ticker-item"><img src="https://images.ctfassets.net/q5ulk4bp65r7/3TBS4oVkD1ghowTqyceHIv/2b2c6b5f88b85de07b9a23a2ea62bdac/Bybit_logo.png" alt="Bybit" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Bybit</span></a><a href="https://binance.com" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Binance_logo.svg" alt="Binance" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Binance</span></a><a href="https://bingx.com" target="_blank" class="ticker-item"><img src="https://bingx.com/favicon.ico" alt="BingX" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">BingX</span></a><a href="https://t.me/RightclawTrade" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Telegram</span></a><a href="https://solana.com" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png" alt="Solana" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Solana</span></a><a href="https://vercel.com" target="_blank" class="ticker-item"><img src="https://assets.vercel.com/image/upload/front/favicon/vercel/180x180.png" alt="Vercel" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Vercel</span></a><a href="https://docker.com" target="_blank" class="ticker-item"><img src="https://www.docker.com/wp-content/uploads/2022/03/vertical-logo-monochromatic.png" alt="Docker" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Docker</span></a><a href="https://python.org" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Python</span></a><a href="https://nextjs.org" target="_blank" class="ticker-item"><img src="https://assets.vercel.com/image/upload/v1662130559/nextjs/Icon_dark_background.png" alt="Next.js" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Next.js</span></a><a href="https://github.com" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">GitHub</span></a><a href="https://bybit.com" target="_blank" class="ticker-item"><img src="https://images.ctfassets.net/q5ulk4bp65r7/3TBS4oVkD1ghowTqyceHIv/2b2c6b5f88b85de07b9a23a2ea62bdac/Bybit_logo.png" alt="Bybit" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Bybit</span></a><a href="https://binance.com" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Binance_logo.svg" alt="Binance" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Binance</span></a><a href="https://bingx.com" target="_blank" class="ticker-item"><img src="https://bingx.com/favicon.ico" alt="BingX" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">BingX</span></a><a href="https://t.me/RightclawTrade" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Telegram</span></a><a href="https://solana.com" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png" alt="Solana" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Solana</span></a><a href="https://vercel.com" target="_blank" class="ticker-item"><img src="https://assets.vercel.com/image/upload/front/favicon/vercel/180x180.png" alt="Vercel" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Vercel</span></a><a href="https://docker.com" target="_blank" class="ticker-item"><img src="https://www.docker.com/wp-content/uploads/2022/03/vertical-logo-monochromatic.png" alt="Docker" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Docker</span></a><a href="https://python.org" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Python</span></a><a href="https://nextjs.org" target="_blank" class="ticker-item"><img src="https://assets.vercel.com/image/upload/v1662130559/nextjs/Icon_dark_background.png" alt="Next.js" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Next.js</span></a><a href="https://github.com" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">GitHub</span></a></div></div>
+<div class="ticker-section-label">BUILT WITH</div>
+<div class="ticker-wrap"><div class="ticker-track"><a href="https://bybit.com" target="_blank" class="ticker-item"><img src="https://images.ctfassets.net/q5ulk4bp65r7/3TBS4oVkD1ghowTqyceHIv/2b2c6b5f88b85de07b9a23a2ea62bdac/Bybit_logo.png" alt="Bybit" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Bybit</span></a><a href="https://binance.com" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Binance_logo.svg" alt="Binance" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Binance</span></a><a href="https://telegram.org" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Telegram</span></a><a href="https://solana.com" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png" alt="Solana" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Solana</span></a><a href="https://vercel.com" target="_blank" class="ticker-item"><img src="https://assets.vercel.com/image/upload/front/favicon/vercel/180x180.png" alt="Vercel" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Vercel</span></a><a href="https://docker.com" target="_blank" class="ticker-item"><img src="https://www.docker.com/wp-content/uploads/2022/03/vertical-logo-monochromatic.png" alt="Docker" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Docker</span></a><a href="https://python.org" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Python</span></a><a href="https://github.com" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">GitHub</span></a><a href="https://nextjs.org" target="_blank" class="ticker-item"><img src="https://assets.vercel.com/image/upload/v1662130559/nextjs/Icon_dark_background.png" alt="Next.js" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Next.js</span></a><a href="https://bybit.com" target="_blank" class="ticker-item"><img src="https://images.ctfassets.net/q5ulk4bp65r7/3TBS4oVkD1ghowTqyceHIv/2b2c6b5f88b85de07b9a23a2ea62bdac/Bybit_logo.png" alt="Bybit" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Bybit</span></a><a href="https://binance.com" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Binance_logo.svg" alt="Binance" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Binance</span></a><a href="https://telegram.org" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Telegram</span></a><a href="https://solana.com" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png" alt="Solana" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Solana</span></a><a href="https://vercel.com" target="_blank" class="ticker-item"><img src="https://assets.vercel.com/image/upload/front/favicon/vercel/180x180.png" alt="Vercel" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Vercel</span></a><a href="https://docker.com" target="_blank" class="ticker-item"><img src="https://www.docker.com/wp-content/uploads/2022/03/vertical-logo-monochromatic.png" alt="Docker" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Docker</span></a><a href="https://python.org" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Python</span></a><a href="https://github.com" target="_blank" class="ticker-item"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">GitHub</span></a><a href="https://nextjs.org" target="_blank" class="ticker-item"><img src="https://assets.vercel.com/image/upload/v1662130559/nextjs/Icon_dark_background.png" alt="Next.js" class="ticker-logo" onerror="this.style.display='none'"><span class="ticker-name">Next.js</span></a></div></div>
+<div class="ticker-section-label">FIND US</div>
+<div class="ticker-wrap ticker-wrap-reverse"><div class="ticker-track ticker-track-reverse"><a href="https://x.com" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">𝕏</span><span class="ticker-name">X / Twitter</span></a><a href="https://t.me/RightclawTrade" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">📡</span><span class="ticker-name">Telegram Channel</span></a><a href="https://github.com/a1exander81" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">🐙</span><span class="ticker-name">GitHub</span></a><a href="https://clawmimoto-backtests.vercel.app" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">📊</span><span class="ticker-name">Dashboard</span></a><a href="https://clawtrader-landing.vercel.app" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">🌐</span><span class="ticker-name">Website</span></a><a href="https://x.com" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">𝕏</span><span class="ticker-name">X / Twitter</span></a><a href="https://t.me/RightclawTrade" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">📡</span><span class="ticker-name">Telegram Channel</span></a><a href="https://github.com/a1exander81" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">🐙</span><span class="ticker-name">GitHub</span></a><a href="https://clawmimoto-backtests.vercel.app" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">📊</span><span class="ticker-name">Dashboard</span></a><a href="https://clawtrader-landing.vercel.app" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">🌐</span><span class="ticker-name">Website</span></a><a href="https://x.com" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">𝕏</span><span class="ticker-name">X / Twitter</span></a><a href="https://t.me/RightclawTrade" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">📡</span><span class="ticker-name">Telegram Channel</span></a><a href="https://github.com/a1exander81" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">🐙</span><span class="ticker-name">GitHub</span></a><a href="https://clawmimoto-backtests.vercel.app" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">📊</span><span class="ticker-name">Dashboard</span></a><a href="https://clawtrader-landing.vercel.app" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">🌐</span><span class="ticker-name">Website</span></a><a href="https://x.com" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">𝕏</span><span class="ticker-name">X / Twitter</span></a><a href="https://t.me/RightclawTrade" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">📡</span><span class="ticker-name">Telegram Channel</span></a><a href="https://github.com/a1exander81" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">🐙</span><span class="ticker-name">GitHub</span></a><a href="https://clawmimoto-backtests.vercel.app" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">📊</span><span class="ticker-name">Dashboard</span></a><a href="https://clawtrader-landing.vercel.app" target="_blank" class="ticker-item ticker-social"><span class="ticker-social-icon">🌐</span><span class="ticker-name">Website</span></a></div></div>
 <footer>
   <div class="footer-logo">🦞 CLAW<span>TRADER</span></div>
   <ul class="footer-links">
@@ -350,10 +379,10 @@ class P{
     const w2=Math.random()
     this.pts=w2<.4?paths.upper:w2<.75?paths.lower:paths.palm
     this.t=init?Math.random():0
-    this.sp=.003+Math.random()*.004
+    this.sp=.0008+Math.random()*.0015
     this.ch=chars[Math.floor(Math.random()*chars.length)]
     this.ct=0;this.ci=8+Math.floor(Math.random()*20)
-    this.sz=9+Math.random()*6;this.al=0
+    this.sz=7+Math.random()*5;this.al=0
     this.mal=.4+Math.random()*.5;this.lf=0;this.mlf=60+Math.random()*80
     const pos=ptOnPath(this.pts,this.t)
     this.x=pos[0];this.y=pos[1];this.trail=[]
@@ -364,7 +393,7 @@ class P{
     if(this.ct>=this.ci){this.ch=chars[Math.floor(Math.random()*chars.length)];this.ct=0}
     const pos=ptOnPath(this.pts,Math.min(this.t,.999))
     this.trail.push([this.x,this.y])
-    if(this.trail.length>5)this.trail.shift()
+    if(this.trail.length>12)this.trail.shift()
     this.x=pos[0];this.y=pos[1]
     if(this.lf<20)this.al=(this.lf/20)*this.mal
     else if(this.lf>this.mlf-20)this.al=((this.mlf-this.lf)/20)*this.mal
@@ -388,7 +417,7 @@ class P{
   }
 }
 
-const particles=Array.from({length:180},()=>new P())
+const particles=Array.from({length:280},()=>new P())
 let mX=0,mY=0
 document.addEventListener('mousemove',e=>{mX=(e.clientX/innerWidth-.5);mY=(e.clientY/innerHeight-.5)})
 
@@ -421,6 +450,37 @@ revEls.forEach(r=>obs.observe(r))
 window.addEventListener('scroll',()=>{
   document.getElementById('nav').style.boxShadow=scrollY>60?'0 4px 40px rgba(0,0,0,0.6)':'none'
 })
+
+// 3D card tilt on desktop hover
+function addTilt(selector) {
+  document.querySelectorAll(selector).forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect()
+      const x = (e.clientX - r.left) / r.width - 0.5
+      const y = (e.clientY - r.top) / r.height - 0.5
+      card.style.transform = `perspective(600px) rotateY(${x*8}deg) rotateX(${-y*8}deg) translateZ(4px)`
+    })
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(600px) rotateY(0deg) rotateX(0deg) translateZ(0px)'
+    })
+  })
+}
+addTilt('.sess-card')
+addTilt('.feat-item')
+addTilt('.how-item')
+
+// Mobile scroll tilt
+const observer3d = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.transform = 'perspective(600px) rotateY(0deg) rotateX(0deg)'
+    } else {
+      e.target.style.transform = 'perspective(600px) rotateY(-3deg) rotateX(2deg)'
+    }
+  })
+}, { threshold: 0.3 })
+document.querySelectorAll('.sess-card,.feat-item').forEach(el => observer3d.observe(el))
+
 </script>
 </body>
 </html>
