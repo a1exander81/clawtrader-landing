@@ -398,63 +398,125 @@ const canvas=document.getElementById("wormhole-canvas")
 const ctx=canvas.getContext("2d")
 function resizeCanvas(){canvas.width=innerWidth;canvas.height=document.getElementById("hero").offsetHeight||innerHeight}
 resizeCanvas();window.addEventListener("resize",resizeCanvas)
-class Beam{
-  constructor(){this.reset(true)}
-  reset(init){
-    this.angle=Math.random()*Math.PI*2
-    this.speed=0.0003+Math.random()*0.0005
-    this.radius=60+Math.random()*200
-    this.arcLen=0.25+Math.random()*0.55
-    this.width=0.8+Math.random()*2.5
+// CRISS-CROSSING BEAMS — full hero, alive, pulsating
+class Beam {
+  constructor(i) { this.id=i; this.reset(true) }
+  reset(init) {
+    const W=canvas.width, H=canvas.height
+    // Random edge entry point
+    const edge=Math.floor(Math.random()*4)
+    if(edge===0){this.x=Math.random()*W;this.y=0;} // top
+    else if(edge===1){this.x=W;this.y=Math.random()*H;} // right
+    else if(edge===2){this.x=Math.random()*W;this.y=H;} // bottom
+    else{this.x=0;this.y=Math.random()*H;} // left
+    // Aim toward opposite region with randomness
+    const tx=W*(0.2+Math.random()*0.6)
+    const ty=H*(0.2+Math.random()*0.6)
+    const dist=Math.sqrt((tx-this.x)**2+(ty-this.y)**2)
+    this.vx=(tx-this.x)/dist
+    this.vy=(ty-this.y)/dist
+    this.speed=1.2+Math.random()*2.2
+    this.length=W*(0.35+Math.random()*0.55)
+    this.width=1.5+Math.random()*3.5
     this.opacity=0
-    this.maxOpacity=0.03+Math.random()*0.07
-    this.life=init?Math.floor(Math.random()*300):0
-    this.maxLife=180+Math.random()*250
+    this.maxOpacity=0.12+Math.random()*0.22
+    this.life=init?Math.floor(Math.random()*120):0
+    this.maxLife=90+Math.random()*160
+    this.pulse=Math.random()*Math.PI*2
+    this.pulseSpeed=0.04+Math.random()*0.06
     const r=Math.random()
-    this.hue=r<0.5?18+Math.random()*12:r<0.75?200+Math.random()*20:265+Math.random()*20
-    this.sat=65+Math.random()*30
-    this.spiralR=0.75+Math.random()*0.5
-    this.cx=canvas.width*(0.45+Math.random()*0.2)
-    this.cy=canvas.height*(0.35+Math.random()*0.3)
+    this.hue=r<0.55?15+Math.random()*15:r<0.78?210+Math.random()*20:265+Math.random()*25
+    this.sat=80+Math.random()*20
+    this.trailX=[]; this.trailY=[]
   }
-  update(){
-    this.angle+=this.speed;this.life++
-    const fl=50
-    if(this.life<fl)this.opacity=(this.life/fl)*this.maxOpacity
-    else if(this.life>this.maxLife-fl)this.opacity=((this.maxLife-this.life)/fl)*this.maxOpacity
-    else this.opacity=this.maxOpacity
-    if(this.life>=this.maxLife)this.reset()
+  update() {
+    this.trailX.push(this.x); this.trailY.push(this.y)
+    if(this.trailX.length>40){this.trailX.shift();this.trailY.shift()}
+    // Slight curve — add perpendicular drift
+    const perp=Math.sin(this.life*0.03)*0.015
+    this.x+=this.vx*this.speed + (-this.vy)*perp*this.speed*8
+    this.y+=this.vy*this.speed + this.vx*perp*this.speed*8
+    this.life++
+    this.pulse+=this.pulseSpeed
+    const fl=30
+    if(this.life<fl) this.opacity=(this.life/fl)*this.maxOpacity
+    else if(this.life>this.maxLife-fl) this.opacity=((this.maxLife-this.life)/fl)*this.maxOpacity
+    else this.opacity=this.maxOpacity*(0.75+Math.sin(this.pulse)*0.25)
+    const W=canvas.width, H=canvas.height
+    const oob=this.x<-200||this.x>W+200||this.y<-200||this.y>H+200
+    if(this.life>=this.maxLife||oob) this.reset()
   }
-  draw(c){
-    const a2=this.angle+this.arcLen
-    const x1=this.cx+Math.cos(this.angle)*this.radius*this.spiralR
-    const y1=this.cy+Math.sin(this.angle)*this.radius
-    const x2=this.cx+Math.cos(a2)*(this.radius+140)*this.spiralR
-    const y2=this.cy+Math.sin(a2)*(this.radius+140)
-    const g=c.createLinearGradient(x1,y1,x2,y2)
-    g.addColorStop(0,`hsla(${this.hue},${this.sat}%,62%,0)`)
-    g.addColorStop(0.25,`hsla(${this.hue},${this.sat}%,67%,${this.opacity})`)
-    g.addColorStop(0.75,`hsla(${this.hue},${this.sat}%,72%,${this.opacity*0.7})`)
-    g.addColorStop(1,`hsla(${this.hue},${this.sat}%,62%,0)`)
-    c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2)
-    c.strokeStyle=g;c.lineWidth=this.width;c.lineCap="round";c.stroke()
+  draw(c) {
+    if(this.trailX.length<2||this.opacity<=0) return
+    const n=this.trailX.length
+    // Draw trail as gradient line
+    const x0=this.trailX[0],y0=this.trailY[0]
+    const xn=this.trailX[n-1],yn=this.trailY[n-1]
+    const g=c.createLinearGradient(x0,y0,xn,yn)
+    g.addColorStop(0,`hsla(${this.hue},${this.sat}%,65%,0)`)
+    g.addColorStop(0.4,`hsla(${this.hue},${this.sat}%,70%,${this.opacity*0.5})`)
+    g.addColorStop(0.85,`hsla(${this.hue},${this.sat}%,75%,${this.opacity})`)
+    g.addColorStop(1,`hsla(${this.hue},${this.sat}%,80%,${this.opacity*1.2})`)
+    c.beginPath()
+    c.moveTo(this.trailX[0],this.trailY[0])
+    for(let i=1;i<n;i++) c.lineTo(this.trailX[i],this.trailY[i])
+    c.strokeStyle=g
+    c.lineWidth=this.width*(0.8+Math.sin(this.pulse)*0.2)
+    c.lineCap="round"; c.lineJoin="round"
+    // Glow effect
+    if(this.opacity>0.1){
+      c.shadowColor=`hsla(${this.hue},${this.sat}%,70%,0.8)`
+      c.shadowBlur=this.width*4
+    }
+    c.stroke()
+    c.shadowBlur=0
+    // Bright head
+    c.beginPath()
+    c.arc(this.x,this.y,this.width*0.8,0,Math.PI*2)
+    c.fillStyle=`hsla(${this.hue},${this.sat}%,90%,${this.opacity*0.9})`
+    c.fill()
   }
 }
-const beams=Array.from({length:65},()=>new Beam())
+
+const beams=Array.from({length:28},(_,i)=>new Beam(i))
 let mX=0.5,mY=0.5
 document.addEventListener("mousemove",e=>{mX=e.clientX/innerWidth;mY=e.clientY/innerHeight})
+
+// Subtle radial glow at mouse
 function drawGlow(){
-  const cx=canvas.width*(0.5+mX*0.06),cy=canvas.height*(0.48+mY*0.05)
-  const g=ctx.createRadialGradient(cx,cy,0,cx,cy,canvas.width*0.28)
-  g.addColorStop(0,"rgba(255,85,0,0.04)");g.addColorStop(0.5,"rgba(80,40,180,0.015)");g.addColorStop(1,"rgba(0,0,0,0)")
-  ctx.fillStyle=g;ctx.fillRect(0,0,canvas.width,canvas.height)
+  const cx=canvas.width*(0.3+mX*0.4)
+  const cy=canvas.height*(0.25+mY*0.5)
+  const r=canvas.width*0.35
+  const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r)
+  g.addColorStop(0,"rgba(255,85,0,0.035)")
+  g.addColorStop(0.5,"rgba(80,40,200,0.012)")
+  g.addColorStop(1,"rgba(0,0,0,0)")
+  ctx.fillStyle=g
+  ctx.fillRect(0,0,canvas.width,canvas.height)
 }
+
+// Mouse repels beams slightly
+function applyMouseForce(b){
+  const dx=b.x-mX*canvas.width
+  const dy=b.y-mY*canvas.height
+  const dist=Math.sqrt(dx*dx+dy*dy)
+  if(dist<120&&dist>0){
+    const force=(120-dist)/120*0.4
+    b.vx+=(dx/dist)*force*0.05
+    b.vy+=(dy/dist)*force*0.05
+    const len=Math.sqrt(b.vx**2+b.vy**2)
+    b.vx/=len; b.vy/=len
+  }
+}
+
+let t=0
 function animate(){
   ctx.clearRect(0,0,canvas.width,canvas.height)
   drawGlow()
+  t+=0.01
   beams.forEach(b=>{
-    b.cx=canvas.width*(0.52+mX*0.06);b.cy=canvas.height*(0.48+mY*0.05)
-    b.update();b.draw(ctx)
+    applyMouseForce(b)
+    b.update(); b.draw(ctx)
   })
   requestAnimationFrame(animate)
 }
