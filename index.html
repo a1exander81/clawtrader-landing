@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Claw Trader — Agentic AI Trading</title>
+<title>Clawmimoto — Agentic AI Trading</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 <style>
@@ -36,7 +36,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content
 .hero-h1{font-family:"Bebas Neue",sans-serif;font-size:clamp(3.5rem,7vw,6.5rem);line-height:0.95;letter-spacing:0.01em;margin-bottom:1.5rem;animation:fadeUp 0.5s ease 0.1s both}
 .hero-h1 .dim{color:rgba(238,242,255,0.15)}
 [data-theme="light"] .hero-h1 .dim{color:rgba(13,18,36,0.12)}
-.hero-h1 .hot{background:linear-gradient(135deg,var(--claw),var(--claw2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-h1 .hot{background:linear-gradient(135deg,var(--claw),var(--claw2));background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .hero-desc{font-size:1rem;color:var(--text);line-height:1.8;font-weight:300;max-width:460px;margin-bottom:2.5rem;animation:fadeUp 0.5s ease 0.2s both}
 .hero-actions{display:flex;gap:0.75rem;flex-wrap:wrap;animation:fadeUp 0.5s ease 0.3s both;margin-bottom:3rem}
 .btn-fill{background:linear-gradient(135deg,var(--claw),var(--claw2));color:white;padding:0.85rem 1.8rem;border-radius:8px;font-weight:600;font-size:0.95rem;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all 0.25s;border:none;cursor:pointer;font-family:"DM Sans",sans-serif;position:relative;overflow:hidden}
@@ -186,16 +186,16 @@ html,body{max-width:100%;overflow-x:hidden}
   .footer-links{flex-wrap:wrap;justify-content:center;gap:1rem}
 }
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/accordion-js@3.3.4/dist/accordion.min.css"/>
 </head>
 <body>
 <nav id="nav">
-  <a href="#hero" class="nav-logo">🦞 CLAW<span class="acc">TRADER</span></a>
+  <a href="#hero" class="nav-logo">🦞 CLAW<span class="acc">MIMOTO</span></a>
   <ul class="nav-links">
     <li><a href="#how">Protocol</a></li>
     <li><a href="#sessions">Sessions</a></li>
     <li><a href="#features">Features</a></li>
     <li><a href="#findus">Find Us</a></li>
-    <li><a href="https://clawmimoto-backtests.vercel.app" target="_blank">Live Data</a></li>
   </ul>
   <div class="nav-right">
     <button class="theme-btn" id="themeBtn">🌙</button>
@@ -211,7 +211,6 @@ html,body{max-width:100%;overflow-x:hidden}
     <p class="hero-desc">Agentic AI trading infrastructure. Three precision sessions per day. Institutional-grade execution. Your capital. Your keys. Always.</p>
     <div class="hero-actions">
       <a href="https://t.me/RightclawTrade" target="_blank" class="btn-fill">📡 Join Channel</a>
-      <a href="https://clawmimoto-backtests.vercel.app" target="_blank" class="btn-ghost">📊 Live Dashboard</a>
     </div>
     <div class="hero-numbers">
       <div><div class="hero-num-val">3<em>x</em></div><div class="hero-num-lbl">Daily Sessions</div></div>
@@ -249,14 +248,14 @@ html,body{max-width:100%;overflow-x:hidden}
 <section id="how" class="section">
   <div class="section-inner">
     <div class="section-tag reveal">Protocol</div>
-    <h2 class="section-h reveal">ZERO INPUT.<br>FULL CONTROL.</h2>
-    <p class="section-sub reveal">Connect once. The agent sources, scores, sizes, and executes. You approve or walk away.</p>
+    <h2 class="section-h reveal">THREE SESSIONS.<br>ONE DECISION.</h2>
+    <p class="section-sub reveal">Pre-London, London, NY. Before each session the bot scans the market, reasons through 3 SMC layers, and sends you a card. Tap EXECUTE or SKIP — or let SUTAMM handle it automatically.</p>
     <div class="how-grid">
       <div class="how-item glass-card reveal"><div class="how-num">01</div><div class="how-icon">🔗</div><h3>Connect Bybit</h3><p>API key with read and trade permissions only. Withdrawals remain locked. Setup takes under two minutes.</p></div>
-      <div class="how-item glass-card reveal"><div class="how-num">02</div><div class="how-icon">⚙️</div><h3>Set Risk Profile</h3><p>Conservative, Balanced, or Aggressive. The system calibrates leverage and position size to match your threshold.</p></div>
-      <div class="how-item glass-card reveal"><div class="how-num">03</div><div class="how-icon">🤖</div><h3>Agent Scans</h3><p>Before each session the agent fetches live market data, scores setups against eight conditions, and surfaces the top candidates.</p></div>
+      <div class="how-item glass-card reveal"><div class="how-num">02</div><div class="how-icon">⚙️</div><h3>Set Risk Profile</h3><p>Choose DEFAULT mode (fixed leverage + margin) or DYNAMIC mode where the AI sizes position based on setup confidence and RRR.</p></div>
+      <div class="how-item glass-card reveal"><div class="how-num">03</div><div class="how-icon">🤖</div><h3>Agent Scans</h3><p>Before each session the bot fetches live Bybit data, runs a 3-layer SMC analysis (4H trend, 1H OB/FVG, 15M displacement), and surfaces high-conviction candidates.</p></div>
       <div class="how-item glass-card reveal"><div class="how-num">04</div><div class="how-icon">✅</div><h3>Approve or Walk</h3><p>One tap on Telegram. Pre-set SL and TP execute instantly. No response in ten minutes — the system auto-skips.</p></div>
-      <div class="how-item glass-card reveal"><div class="how-num">05</div><div class="how-icon">🛡️</div><h3>Capital Locks In</h3><p>At ten percent profit the stop moves to breakeven. Principal is secured. The remainder runs free on a trailing exit.</p></div>
+      <div class="how-item glass-card reveal"><div class="how-num">05</div><div class="how-icon">🛡️</div><h3>Trade Managed</h3><p>SL and TP execute instantly on entry. Position is tracked live in Telegram. Close manually or let the bot manage the exit when TP is hit.</p></div>
     </div>
   </div>
 </section>
@@ -278,10 +277,10 @@ html,body{max-width:100%;overflow-x:hidden}
     <h2 class="section-h reveal">EVERY EDGE.<br>AUTOMATED.</h2>
     <div class="feat-layout">
       <div class="feat-list">
-        <div class="feat-item glass-card reveal"><div class="feat-icon-wrap">⚡</div><div><h4>ClawStrike</h4><p>One autonomous trade per day. All eight conditions must converge — AI score above eight, RRR above three, session confirmed, volume ratio above two.</p></div></div>
+        <div class="feat-item glass-card reveal"><div class="feat-icon-wrap">⚡</div><div><h4>ClawStrike</h4><p>One autonomous trade per day. All three SMC layers must align — 4H trend structure, 1H Order Block proximity, 15M displacement confirmation.</p></div></div>
         <div class="feat-item glass-card reveal"><div class="feat-icon-wrap">🔍</div><div><h4>Dynamic Scanner</h4><p>Fetches real movers from Bybit. Drop any link — TradingView, X post, exchange URL — the agent extracts the pair and returns a scored setup.</p></div></div>
-        <div class="feat-item glass-card reveal"><div class="feat-icon-wrap">🛡️</div><div><h4>Adaptive Stop Loss</h4><p>The stop reads your last ten trades and recalibrates against your actual win rate. Tightens during drawdowns. Expands when the edge is confirmed.</p></div></div>
-        <div class="feat-item glass-card reveal"><div class="feat-icon-wrap">💎</div><div><h4>CLUSDT Rewards</h4><p>Early participants earn CLUSDT tokens proportional to activity quality and consistency. Real tokenized upside for those who show up early.</p></div></div>
+        <div class="feat-item glass-card reveal"><div class="feat-icon-wrap">🛡️</div><div><h4>Trade Management</h4><p>SL and TP are set on entry. Position is tracked live in Telegram. Close manually or let the bot manage the exit when TP is hit.</p></div></div>
+        <div class="feat-item glass-card reveal"><div class="feat-icon-wrap">💎</div><div><h4>Beta Access</h4><p>Early beta users earn tiered fee discounts based on mock trade volume. The more you test, the lower your platform fee when you go live.</p></div></div>
       </div>
       <div class="feat-visual glass-card reveal">
         <div class="fv-header"><div class="fv-dot"></div>live · session performance</div>
@@ -293,7 +292,80 @@ html,body{max-width:100%;overflow-x:hidden}
           <div class="metric-row"><span class="mr-label">Avg Duration</span><span class="mr-val neu">4m</span></div>
           <div class="metric-row"><span class="mr-label">Avg Leverage</span><span class="mr-val neu">18x</span></div>
           <div class="mini-chart"><svg viewBox="0 0 300 60" preserveAspectRatio="none"><defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00D4AA" stop-opacity="0.3"/><stop offset="100%" stop-color="#00D4AA" stop-opacity="0"/></linearGradient></defs><path d="M0,55 L30,50 L60,45 L90,48 L120,35 L150,30 L180,25 L210,28 L240,15 L270,10 L300,5 L300,60 L0,60 Z" fill="url(#cg)"/><path d="M0,55 L30,50 L60,45 L90,48 L120,35 L150,30 L180,25 L210,28 L240,15 L270,10 L300,5" stroke="#00D4AA" stroke-width="1.5" fill="none"/></svg></div>
-          <div style="font-family:var(--mono);font-size:0.65rem;color:var(--muted);margin-top:0.5rem;text-align:right">engine: freqtrade · exchange: bybit</div>
+          <div style="font-family:var(--mono);font-size:0.65rem;color:var(--muted);margin-top:0.5rem;text-align:right">engine: DeepSeek SMC · exchange: bybit</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<section id="faq" class="section">
+  <div class="section-inner">
+    <div class="section-tag">FAQ's</div>
+    <h2 class="section-h">GOT<br>QUESTIONS?</h2>
+    <div class="ac-container" data-accordion>
+      <div class="ac">
+        <h3 class="ac-header">
+          <button class="ac-trigger">Do I need to be online when the bot trades?</button>
+        </h3>
+        <div class="ac-panel">
+          <p class="ac-text">No. With SUTAMM ON, the bot auto-executes when all entry conditions are met. With SUTAMM OFF, you get a Telegram card with EXECUTE / SKIP buttons. If you don't respond within 10 minutes, the bot auto-skips the trade for you.</p>
+        </div>
+      </div>
+      <div class="ac">
+        <h3 class="ac-header">
+          <button class="ac-trigger">Is my Bybit API key safe?</button>
+        </h3>
+        <div class="ac-panel">
+          <p class="ac-text">Yes. Your key is encrypted with AES-256-GCM and stored securely on the server. The plaintext key never leaves the VPS. The API key only needs read + trade permissions — withdrawals stay permanently locked on your Bybit account.</p>
+        </div>
+      </div>
+      <div class="ac">
+        <h3 class="ac-header">
+          <button class="ac-trigger">How many trades can I expect per day?</button>
+        </h3>
+        <div class="ac-panel">
+          <p class="ac-text">Up to 3 — one per session (PRE-LONDON at 5:45 PHT, LONDON at 15:45 PHT, NY at 20:45 PHT). The bot only trades when all 3 SMC layers align. Most sessions return 0 setups. We prioritize quality over quantity — no setup, no loss.</p>
+        </div>
+      </div>
+      <div class="ac">
+        <h3 class="ac-header">
+          <button class="ac-trigger">Do I need a new Bybit account?</button>
+        </h3>
+        <div class="ac-panel">
+          <p class="ac-text">New accounts must register via the Clawmimoto referral link to access the bot. If you already have an existing Bybit account, you can link it retroactively through Bybit's affiliate community section and still receive the same beta incentives.</p>
+        </div>
+      </div>
+      <div class="ac">
+        <h3 class="ac-header">
+          <button class="ac-trigger">What is MOCK mode?</button>
+        </h3>
+        <div class="ac-panel">
+          <p class="ac-text">MOCK mode simulates trades without placing real orders on Bybit. All PnL is tracked virtually so you can validate the bot's performance risk-free. Switch to REAL mode when you're confident and ready to trade with live capital.</p>
+        </div>
+      </div>
+      <div class="ac">
+        <h3 class="ac-header">
+          <button class="ac-trigger">Is there a platform fee?</button>
+        </h3>
+        <div class="ac-panel">
+          <p class="ac-text">10% of net profit per closed REAL trade. No fee if the trade breaks even or is a loss. Beta users earn tiered discounts based on mock trade volume — the more you test, the lower your fee rate when you go live.</p>
+        </div>
+      </div>
+      <div class="ac">
+        <h3 class="ac-header">
+          <button class="ac-trigger">What pairs does the bot trade?</button>
+        </h3>
+        <div class="ac-panel">
+          <p class="ac-text">The bot dynamically selects the top 5 hottest Bybit perpetual pairs before each session using a live momentum scorer. Typical pairs include BTC, ETH, SOL, HYPE, and other high-volume movers — not fixed pairs, always market-driven.</p>
+        </div>
+      </div>
+      <div class="ac">
+        <h3 class="ac-header">
+          <button class="ac-trigger">What AI models power the bot?</button>
+        </h3>
+        <div class="ac-panel">
+          <p class="ac-text">The bot uses a configurable AI engine for SMC/ICT reasoning across 3 timeframes (4H trend, 1H Order Block, 15M displacement). News context from CoinTelegraph, Decrypt, and CryptoPanic is fed into every scan. Supported providers include DeepSeek, Claude, and OpenAI — you choose.</p>
         </div>
       </div>
     </div>
@@ -326,41 +398,46 @@ html,body{max-width:100%;overflow-x:hidden}
     </div>
   </div>
 </section>
+
 <div class="ticker-section">
-  <div class="ticker-label">BUILT WITH</div>
+  <div class="ticker-label">FOLLOW US</div>
   <div class="ticker-wrap">
     <div class="ticker-track">
-      <div class="t-item"><img src="https://upload.wikimedia.org/wikipediv>
-      <div class="t-item"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" class="t-logo" onerror="this.parentElement.style.display=none"/></div>
-      <div class="t-item"><img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png" class="t-logo" onerror="this.parentElement.style.display=none"/></div>
-      <div class="t-item"><img src="https://assets.vercel.com/image/upload/front/favicon/vercel/180x180.png" class="t-logo" style="border-radius:4px;filter:grayscale(1) brightness(2)" onerror="this.parentElement.style.display=none"/></div>
-      <div class="t-item"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" class="t-logo" onerror="this.parentElement.style.display=none"/></div>
-      <div class="t-item"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" class="t-logo" style="filter:grayscale(1) brightness(3)" onerror="this.parentElement.style.display=none"/></div>
-      <div class="t-item"><img src="https://assets.vercel.com/image/upload/v1662130559/nextjs/Icon_dark_background.png" class="t-logo" style="border-radius:4px" onerror="this.parentElement.style.display=none"/></div>
-      <div class="t-item"><img src="https://www.docker.com/wp-content/uploads/2022/03/vertical-logo-monochromatic.png" class="t-logo" onerror="this.parentElement.style.display=none"/></div>
-      <div class="t-item"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Binance_logo.svg" class="t-logo" onerror="this.parentElement.style.display=none"/></div>
-      <div class="t-item"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" class="t-logo" onerror="this.parentElement.style.display=none"/></div>
-      <div class="t-item"><img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png" class="t-logo" onerror="this.parentElement.style.display=none"/></div>
-      <div class="t-item"><img src="https://assets.vercel.com/image/upload/front/favicon/vercel/180x180.png" class="t-logo" style="border-radius:4px;filter:grayscale(1) brightness(2)" onerror="this.parentElement.style.display=none"/></div>
-      <div class="t-item"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" class="t-logo" onerror="this.parentElement.style.display=none"/></div>
-      <div class="t-item"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" class="t-logo" style="filter:grayscale(1) brightness(3)" onerror="this.parentElement.style.display=none"/></div>
-      <div class="t-item"><img src="https://assets.vercel.com/image/upload/v1662130559/nextjs/Icon_dark_background.png" class="t-logo" style="border-radius:4px" onerror="this.parentElement.style.display=none"/></div>
-      <div class="t-item"><img src="https://www.docker.com/wp-content/uploads/2022/03/vertical-logo-monochromatic.png" class="t-logo" onerror="this.parentElement.style.display=none"/></div>
+      <a href="https://x.com" target="_blank" class="t-item"><div class="t-social x-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.261 5.636 5.903-5.636zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div></a>
+      <a href="https://t.me/RightclawTrade" target="_blank" class="t-item"><div class="t-social tg-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div></a>
+      <a href="https://github.com/a1exander81" target="_blank" class="t-item"><div class="t-social gh-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></div></a>
+      <a href="https://tiktok.com" target="_blank" class="t-item"><div class="t-social tt-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></div></a>
+      <a href="https://x.com" target="_blank" class="t-item"><div class="t-social x-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.261 5.636 5.903-5.636zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div></a>
+      <a href="https://t.me/RightclawTrade" target="_blank" class="t-item"><div class="t-social tg-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div></a>
+      <a href="https://github.com/a1exander81" target="_blank" class="t-item"><div class="t-social gh-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></div></a>
+      <a href="https://tiktok.com" target="_blank" class="t-item"><div class="t-social tt-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></div></a>
+      <a href="https://x.com" target="_blank" class="t-item"><div class="t-social x-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.261 5.636 5.903-5.636zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div></a>
+      <a href="https://t.me/RightclawTrade" target="_blank" class="t-item"><div class="t-social tg-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div></a>
+      <a href="https://github.com/a1exander81" target="_blank" class="t-item"><div class="t-social gh-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></div></a>
+      <a href="https://tiktok.com" target="_blank" class="t-item"><div class="t-social tt-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></div></a>
+      <a href="https://x.com" target="_blank" class="t-item"><div class="t-social x-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.261 5.636 5.903-5.636zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div></a>
+      <a href="https://t.me/RightclawTrade" target="_blank" class="t-item"><div class="t-social tg-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div></a>
+      <a href="https://github.com/a1exander81" target="_blank" class="t-item"><div class="t-social gh-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></div></a>
+      <a href="https://tiktok.com" target="_blank" class="t-item"><div class="t-social tt-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></div></a>
+      <a href="https://x.com" target="_blank" class="t-item"><div class="t-social x-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.261 5.636 5.903-5.636zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div></a>
+      <a href="https://t.me/RightclawTrade" target="_blank" class="t-item"><div class="t-social tg-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div></a>
+      <a href="https://github.com/a1exander81" target="_blank" class="t-item"><div class="t-social gh-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></div></a>
+      <a href="https://tiktok.com" target="_blank" class="t-item"><div class="t-social tt-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></div></a>
+      <a href="https://x.com" target="_blank" class="t-item"><div class="t-social x-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.261 5.636 5.903-5.636zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div></a>
+      <a href="https://t.me/RightclawTrade" target="_blank" class="t-item"><div class="t-social tg-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div></a>
+      <a href="https://github.com/a1exander81" target="_blank" class="t-item"><div class="t-social gh-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></div></a>
+      <a href="https://tiktok.com" target="_blank" class="t-item"><div class="t-social tt-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></div></a>
+      <a href="https://x.com" target="_blank" class="t-item"><div class="t-social x-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.261 5.636 5.903-5.636zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div></a>
+      <a href="https://t.me/RightclawTrade" target="_blank" class="t-item"><div class="t-social tg-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div></a>
+      <a href="https://github.com/a1exander81" target="_blank" class="t-item"><div class="t-social gh-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></div></a>
+      <a href="https://tiktok.com" target="_blank" class="t-item"><div class="t-social tt-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></div></a>
+      <a href="https://x.com" target="_blank" class="t-item"><div class="t-social x-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.261 5.636 5.903-5.636zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div></a>
+      <a href="https://t.me/RightclawTrade" target="_blank" class="t-item"><div class="t-social tg-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div></a>
+      <a href="https://github.com/a1exander81" target="_blank" class="t-item"><div class="t-social gh-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></div></a>
+      <a href="https://tiktok.com" target="_blank" class="t-item"><div class="t-social tt-bg"><svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></div></a>
     </div>
   </div>
-  <div class="ticker-label">FIND US</div>
-  <div class="ticker-wrap">
-    <div class="ticker-track ticker-rev">
-      <a href="https://x.com" target="_blank" class="t-item"><div class="t-social"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.261 5.636 5.903-5.636zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div></a>
-      <a href="https://t.me/RightclawTrade" target="_blank" class="t-item"><div class="t-social"><svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div></a>
-      <a href="https://github.com/a1exander81" target="_blank" class="t-item"><div class="t-social"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></div></a>
-      <a href="https://tiktok.com" target="_blank" class="t-item"><div class="t-social"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></div></a>
-      <a href="https://x.com" target="_blank" class="t-item"><div class="t-social"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.261 5.636 5.903-5.636zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div></a>
-      <a href="https://t.me/RightclawTrade" target="_blank" class="t-item"><div class="t-social"><svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div></a>
-      <a href="https://github.com/a1exander81" target="_blank" class="t-item"><div class="t-social"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></div></a>
-      <a href="https://tiktok.com" target="_blank" class="t-item"><div class="t-social"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></div></a>
-    </div>
-  </div>
+</div></div>
 </div>
 <section id="cta">
   <div class="cta-inner">
@@ -369,10 +446,11 @@ html,body{max-width:100%;overflow-x:hidden}
     <p class="cta-sub reveal">Join the channel for live signals, session alerts, and early access. The edge is live. The hunt is on.</p>
     <div class="cta-actions reveal">
       <a href="https://t.me/RightclawTrade" target="_blank" class="btn-fill">📡 Join @RightclawTrade</a>
-      <a href="https://clawmimoto-backtests.vercel.app" target="_blank" class="btn-ghost">📊 View Dashboard</a>
     </div>
   </div>
 </section>
+
+
 <footer>
   <div class="footer-logo">🦞 CLAW<span>TRADER</span></div>
   <ul class="footer-links">
@@ -382,116 +460,9 @@ html,body{max-width:100%;overflow-x:hidden}
     <li><a href="#findus">Community</a></li>
     <li><a href="https://clawmimoto-backtests.vercel.app" target="_blank">Dashboard</a></li>
   </ul>
-  <div class="footer-copy">© 2026 Claw Trader · Not financial advice.</div>
+  <div class="footer-copy">© 2026 Clawmimoto · Not financial advice.</div>
 </footer>
-<script>
-const html=document.documentElement,themeBtn=document.getElementById("themeBtn")
-const saved=localStorage.getItem("ct-theme")
-const init=saved||(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light")
-html.setAttribute("data-theme",init);themeBtn.textContent=init==="dark"?"☀️":"🌙"
-themeBtn.addEventListener("click",()=>{
-  const next=html.getAttribute("data-theme")==="dark"?"light":"dark"
-  html.setAttribute("data-theme",next);themeBtn.textContent=next==="dark"?"☀️":"🌙"
-  localStorage.setItem("ct-theme",next)
-})
-const canvas=document.getElementById("wormhole-canvas")
-const ctx=canvas.getContext("2d")
-function resizeCanvas(){canvas.width=innerWidth;canvas.height=document.getElementById("hero").offsetHeight||innerHeight}
-resizeCanvas();window.addEventListener("resize",resizeCanvas)
-class Beam{
-  constructor(){this.reset(true)}
-  reset(init){
-    this.angle=Math.random()*Math.PI*2
-    this.speed=0.0003+Math.random()*0.0005
-    this.radius=60+Math.random()*200
-    this.arcLen=0.25+Math.random()*0.55
-    this.width=0.8+Math.random()*2.5
-    this.opacity=0
-    this.maxOpacity=0.03+Math.random()*0.07
-    this.life=init?Math.floor(Math.random()*300):0
-    this.maxLife=180+Math.random()*250
-    const r=Math.random()
-    this.hue=r<0.5?18+Math.random()*12:r<0.75?200+Math.random()*20:265+Math.random()*20
-    this.sat=65+Math.random()*30
-    this.spiralR=0.75+Math.random()*0.5
-    this.cx=canvas.width*(0.45+Math.random()*0.2)
-    this.cy=canvas.height*(0.35+Math.random()*0.3)
-  }
-  update(){
-    this.angle+=this.speed;this.life++
-    const fl=50
-    if(this.life<fl)this.opacity=(this.life/fl)*this.maxOpacity
-    else if(this.life>this.maxLife-fl)this.opacity=((this.maxLife-this.life)/fl)*this.maxOpacity
-    else this.opacity=this.maxOpacity
-    if(this.life>=this.maxLife)this.reset()
-  }
-  draw(c){
-    const a2=this.angle+this.arcLen
-    const x1=this.cx+Math.cos(this.angle)*this.radius*this.spiralR
-    const y1=this.cy+Math.sin(this.angle)*this.radius
-    const x2=this.cx+Math.cos(a2)*(this.radius+140)*this.spiralR
-    const y2=this.cy+Math.sin(a2)*(this.radius+140)
-    const g=c.createLinearGradient(x1,y1,x2,y2)
-    g.addColorStop(0,`hsla(${this.hue},${this.sat}%,62%,0)`)
-    g.addColorStop(0.25,`hsla(${this.hue},${this.sat}%,67%,${this.opacity})`)
-    g.addColorStop(0.75,`hsla(${this.hue},${this.sat}%,72%,${this.opacity*0.7})`)
-    g.addColorStop(1,`hsla(${this.hue},${this.sat}%,62%,0)`)
-    c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2)
-    c.strokeStyle=g;c.lineWidth=this.width;c.lineCap="round";c.stroke()
-  }
-}
-const beams=Array.from({length:65},()=>new Beam())
-let mX=0.5,mY=0.5
-document.addEventListener("mousemove",e=>{mX=e.clientX/innerWidth;mY=e.clientY/innerHeight})
-function drawGlow(){
-  const cx=canvas.width*(0.5+mX*0.06),cy=canvas.height*(0.48+mY*0.05)
-  const g=ctx.createRadialGradient(cx,cy,0,cx,cy,canvas.width*0.28)
-  g.addColorStop(0,"rgba(255,85,0,0.04)");g.addColorStop(0.5,"rgba(80,40,180,0.015)");g.addColorStop(1,"rgba(0,0,0,0)")
-  ctx.fillStyle=g;ctx.fillRect(0,0,canvas.width,canvas.height)
-}
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height)
-  drawGlow()
-  beams.forEach(b=>{
-    b.cx=canvas.width*(0.52+mX*0.06);b.cy=canvas.height*(0.48+mY*0.05)
-    b.update();b.draw(ctx)
-  })
-  requestAnimationFrame(animate)
-}
-animate()
-function addTilt(sel){
-  document.querySelectorAll(sel).forEach(card=>{
-    card.addEventListener("mousemove",e=>{
-      const r=card.getBoundingClientRect()
-      const x=(e.clientX-r.left)/r.width-0.5
-      const y=(e.clientY-r.top)/r.height-0.5
-      card.style.transform=`perspective(500px) rotateY(${x*18}deg) rotateX(${-y*18}deg) translateZ(14px) scale(1.03)`
-    })
-    card.addEventListener("mouseleave",()=>{
-      card.style.transform="perspective(500px) rotateY(0deg) rotateX(0deg) translateZ(0) scale(1)"
-    })
-  })
-}
-addTilt(".sess-card");addTilt(".feat-item");addTilt(".how-item");addTilt(".social-card")
-if(innerWidth<=900){
-  const cards=document.querySelectorAll(".sess-card,.feat-item,.social-card")
-  const mObs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      e.target.style.transform=e.isIntersecting
-        ?"perspective(500px) rotateY(0deg) rotateX(0deg)"
-        :"perspective(500px) rotateY(-3deg) rotateX(2deg)"
-    })
-  },{threshold:0.35})
-  cards.forEach(c=>mObs.observe(c))
-}
-const revEls=document.querySelectorAll(".reveal")
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add("vis"),i*70)})
-},{threshold:0.1})
-revEls.forEach(r=>obs.observe(r))
-window.addEventListener("scroll",()=>{
-  document.getElementById("nav").style.boxShadow=scrollY>60?"0 4px 40px rgba(0,0,0,0.5)":"none"
-})
-</script>
+<script src="https://cdn.jsdelivr.net/npm/accordion-js@3.3.4/dist/accordion.min.js"></script>
+<script src="scripts.js"></script>
 </body>
 </html>
