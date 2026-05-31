@@ -337,10 +337,21 @@ function setTab(name) {
   if (name === 'strategy') renderStrategy()
 }
 
-// ── Fetch ───────────────────────────────────────────────────────────────────
-async function fetchTrades() {
+// ── Token auth ──────────────────────────────────────────────────────────────
+async function resolveToken(token) {
   const r = await fetch(
-    SB_URL + '/rest/v1/mock_positions?status=eq.closed&order=closed_at.desc&limit=500',
+    SB_URL + '/rest/v1/mock_accounts?dashboard_token=eq.' + encodeURIComponent(token) + '&select=user_id&limit=1',
+    { headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY } }
+  )
+  if (!r.ok) return null
+  const rows = await r.json()
+  return rows.length ? rows[0].user_id : null
+}
+
+// ── Fetch ───────────────────────────────────────────────────────────────────
+async function fetchTrades(userId) {
+  const r = await fetch(
+    SB_URL + '/rest/v1/mock_positions?user_id=eq.' + userId + '&status=eq.closed&order=closed_at.desc&limit=500',
     { headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY } }
   )
   if (!r.ok) return []
@@ -581,8 +592,45 @@ function renderStrategy() {
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 ;(async () => {
+  // ── Token auth gate ──────────────────────────────────────────────────────
+  const params = new URLSearchParams(window.location.search)
+  const token = params.get('token')
+
+  if (!token) {
+    document.querySelector('.page').innerHTML = `
+      <div style="min-height:60vh;display:flex;align-items:center;justify-content:center">
+        <div class="empty-state">
+          <div class="empty-icon">🔒</div>
+          <div class="empty-title">PRIVATE DASHBOARD</div>
+          <div class="empty-sub">Type <code style="background:rgba(255,85,0,0.1);color:var(--claw);padding:2px 6px;border-radius:4px">/dashboard</code> in your Clawmimoto Telegram bot to get your private link.</div>
+        </div>
+      </div>`
+    return
+  }
+
+  // Resolve token → user_id
+  let userId
   try {
-    allTrades = await fetchTrades()
+    userId = await resolveToken(token)
+  } catch(e) {
+    console.error('Token resolve failed', e)
+  }
+
+  if (!userId) {
+    document.querySelector('.page').innerHTML = `
+      <div style="min-height:60vh;display:flex;align-items:center;justify-content:center">
+        <div class="empty-state">
+          <div class="empty-icon">❌</div>
+          <div class="empty-title">INVALID LINK</div>
+          <div class="empty-sub">This link has expired or is invalid. Type <code style="background:rgba(255,85,0,0.1);color:var(--claw);padding:2px 6px;border-radius:4px">/dashboard</code> in Telegram to get a fresh link.</div>
+        </div>
+      </div>`
+    return
+  }
+
+  // Fetch this user's trades
+  try {
+    allTrades = await fetchTrades(userId)
     filtered = [...allTrades]
   } catch(e) {
     console.error('Failed to fetch trades', e)
