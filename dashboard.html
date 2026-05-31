@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Clawmimoto — MOCK Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#03050D;--surface:#080E1C;--surface2:#0D1526;--border:rgba(255,255,255,0.07);--claw:#FF5500;--claw2:#FF8040;--teal:#00D4AA;--white:#EEF2FF;--muted:#2D3A52;--text:#7B8FAD;--mono:"JetBrains Mono",monospace;--tr:0.3s ease}
+[data-theme="light"]{--bg:#F2F4FF;--surface:#FFFFFF;--surface2:#ECEEFF;--border:rgba(0,0,0,0.07);--white:#0D1224;--muted:#BCC5D6;--text:#5A6A85}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:"DM Sans",sans-serif;overflow-x:hidden;transition:background var(--tr),color var(--tr);min-height:100vh}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--claw);border-radius:2px}
+
+/* ── Nav (identical to landing) ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 2.5rem;background:rgba(3,5,13,0.82);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);transition:all var(--tr)}
+[data-theme="light"] nav{background:rgba(242,244,255,0.9)}
+.nav-logo{font-family:"Bebas Neue",sans-serif;font-size:1.5rem;letter-spacing:0.08em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:8px}
+.nav-logo .acc{color:var(--claw)}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
+.nav-links a{color:var(--text);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.2s;position:relative}
+.nav-links a:hover{color:var(--white)}
+.nav-links a.active{color:var(--claw)}
+.nav-links a::after{content:"";position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--claw);transform:scaleX(0);transition:transform 0.2s}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+.nav-right{display:flex;align-items:center;gap:0.75rem}
+.theme-btn{background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--white);width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.9rem;transition:all 0.2s}
+.theme-btn:hover{background:rgba(255,85,0,0.12);border-color:var(--claw)}
+.nav-btn{background:var(--claw);color:white;padding:0.5rem 1.25rem;border-radius:6px;font-weight:600;font-size:0.85rem;text-decoration:none;transition:all 0.2s}
+.nav-btn:hover{background:var(--claw2);transform:translateY(-1px)}
+
+/* ── Page wrapper ── */
+.page{max-width:1100px;margin:0 auto;padding:7rem 2.5rem 4rem}
+
+/* ── Header ── */
+.dash-header{margin-bottom:2.5rem}
+.dash-chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,85,0,0.08);border:1px solid rgba(255,85,0,0.22);padding:0.35rem 0.9rem;border-radius:100px;font-family:var(--mono);font-size:0.7rem;color:var(--claw2);letter-spacing:0.08em;margin-bottom:1.25rem}
+.chip-dot{width:5px;height:5px;border-radius:50%;background:var(--claw);animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.dash-h1{font-family:"Bebas Neue",sans-serif;font-size:clamp(2.5rem,5vw,4rem);line-height:1.05;letter-spacing:0.02em;margin-bottom:0.5rem}
+.dash-sub{color:var(--text);font-size:0.9rem;font-weight:300}
+.dash-sub span{color:var(--white);font-weight:500}
+
+/* ── Tab bar ── */
+.tab-bar{display:flex;gap:4px;margin-bottom:2rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content}
+.tab{background:transparent;border:none;color:var(--text);padding:0.5rem 1.1rem;border-radius:7px;cursor:pointer;font-size:0.82rem;font-weight:500;font-family:"DM Sans",sans-serif;transition:all 0.2s}
+.tab.active{background:rgba(255,85,0,0.12);color:var(--claw);border:1px solid rgba(255,85,0,0.25)}
+.tab:hover:not(.active){color:var(--white)}
+
+/* ── Stat grid ── */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-bottom:1.5rem}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;position:relative;overflow:hidden;transition:border-color 0.2s}
+.stat-card:hover{border-color:rgba(255,85,0,0.2)}
+.stat-card::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:var(--accent,linear-gradient(90deg,transparent,var(--claw),transparent))}
+.stat-label{font-family:var(--mono);font-size:0.65rem;color:var(--text);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px}
+.stat-value{font-family:"Bebas Neue",sans-serif;font-size:2rem;line-height:1;letter-spacing:0.02em}
+.stat-sub{font-size:0.72rem;color:var(--text);margin-top:4px}
+.c-teal{color:var(--teal)}.c-red{color:#FF4D4D}.c-gold{color:#F59E0B}.c-blue{color:#3B82F6}.c-purple{color:#8B5CF6}.c-white{color:var(--white)}
+
+/* ── Glass card ── */
+.glass{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color 0.2s}
+.glass:hover{border-color:rgba(255,85,0,0.15)}
+.glass-header{padding:1rem 1.5rem;border-bottom:1px solid var(--border);font-size:0.82rem;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--white)}
+.glass-body{padding:1.5rem}
+
+/* ── Equity chart ── */
+.eq-chart{width:100%;height:100px}
+
+/* ── Trade table ── */
+.trade-table{width:100%}
+.table-head{display:grid;grid-template-columns:1.8fr 0.7fr 0.8fr 0.5fr 0.6fr 1fr 1.3fr;gap:8px;padding:0.6rem 1.25rem;font-family:var(--mono);font-size:0.62rem;color:var(--text);text-transform:uppercase;letter-spacing:0.1em;border-bottom:1px solid var(--border)}
+.trade-row{display:grid;grid-template-columns:1.8fr 0.7fr 0.8fr 0.5fr 0.6fr 1fr 1.3fr;gap:8px;padding:0.75rem 1.25rem;border-bottom:1px solid var(--border);align-items:center;transition:background 0.15s;cursor:default}
+.trade-row:hover{background:rgba(255,255,255,0.02)}
+.trade-row:last-child{border-bottom:none}
+.pair-name{font-family:var(--mono);font-weight:700;font-size:0.85rem}
+.dir-badge{display:inline-block;font-size:0.62rem;padding:2px 6px;border-radius:4px;font-weight:600;margin-left:6px}
+.dir-long{background:rgba(0,212,170,0.12);color:var(--teal)}
+.dir-short{background:rgba(255,77,77,0.12);color:#FF4D4D}
+.pnl-val{font-family:var(--mono);font-weight:700;font-size:0.85rem}
+.cell-muted{font-size:0.75rem;color:var(--text)}
+.cell-mono{font-family:var(--mono);font-size:0.72rem;color:var(--text)}
+
+/* ── Filters ── */
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.filter-inp{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:var(--white);padding:8px 12px;font-size:0.82rem;outline:none;font-family:"DM Sans",sans-serif;transition:border-color 0.2s}
+.filter-inp:focus{border-color:rgba(255,85,0,0.4)}
+.filter-inp::placeholder{color:var(--text)}
+.filter-btn{background:transparent;border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:0.78rem;font-family:"DM Sans",sans-serif;transition:all 0.2s}
+.filter-btn.on{background:rgba(255,85,0,0.1);border-color:rgba(255,85,0,0.3);color:var(--claw)}
+.filter-btn:hover:not(.on){color:var(--white);border-color:rgba(255,255,255,0.15)}
+
+/* ── Analytics grid ── */
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.analytics-full{grid-column:1/-1}
+.by-pair-row{margin-bottom:14px}
+.by-pair-header{display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:5px}
+.by-pair-name{font-weight:600}
+.by-pair-bar-wrap{display:flex;gap:6px;align-items:center}
+.by-pair-bar{flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:2px}
+.by-pair-fill{height:100%;background:var(--claw);border-radius:2px;transition:width 0.6s ease}
+.by-pair-count{font-size:0.68rem;color:var(--text);font-family:var(--mono)}
+.session-row{display:flex;justify-content:space-between;padding:0.65rem 0;border-bottom:1px solid var(--border);align-items:center}
+.session-row:last-child{border-bottom:none}
+.session-name{font-size:0.85rem;font-weight:500;text-transform:capitalize}
+.session-meta{font-size:0.7rem;color:var(--text);margin-top:2px}
+.exit-tag{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:0.75rem;display:inline-flex;gap:6px}
+
+/* ── Strategy table ── */
+.strat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.strat-row{display:flex;justify-content:space-between;align-items:center;padding:0.65rem 0.9rem;background:rgba(255,255,255,0.02);border-radius:8px;font-size:0.82rem;border:1px solid var(--border)}
+.strat-key{color:var(--text)}
+.strat-val{font-family:var(--mono);font-size:0.76rem;color:var(--white)}
+[data-theme="light"] .strat-val{color:#0D1224}
+
+/* ── Empty state ── */
+.empty-state{text-align:center;padding:4rem 2rem;color:var(--text)}
+.empty-icon{font-size:2.5rem;margin-bottom:1rem}
+.empty-title{font-family:"Bebas Neue",sans-serif;font-size:1.5rem;color:var(--white);margin-bottom:0.5rem;letter-spacing:0.05em}
+.empty-sub{font-size:0.85rem;line-height:1.7;max-width:340px;margin:0 auto}
+
+/* ── Pagination ── */
+.pagination{display:flex;justify-content:center;gap:6px;margin-top:14px;flex-wrap:wrap}
+.page-btn{background:transparent;border:1px solid var(--border);color:var(--text);border-radius:7px;padding:5px 12px;cursor:pointer;font-size:0.78rem;font-family:"DM Sans",sans-serif;transition:all 0.2s}
+.page-btn.on{background:rgba(255,85,0,0.1);border-color:rgba(255,85,0,0.3);color:var(--claw)}
+.page-btn:disabled{opacity:0.35;cursor:not-allowed}
+.page-info{text-align:center;color:var(--text);font-size:0.75rem;margin-top:6px}
+
+/* ── Loading pulse ── */
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.loading{animation:pulse 1.5s infinite;padding:3rem;text-align:center;color:var(--text);font-size:0.85rem}
+
+/* ── Footer ── */
+footer{padding:2rem 2.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:4rem}
+.footer-logo{font-family:"Bebas Neue",sans-serif;font-size:1.2rem;letter-spacing:0.08em}
+.footer-logo span{color:var(--claw)}
+.footer-links{display:flex;gap:2rem;list-style:none}
+.footer-links a{color:var(--text);text-decoration:none;font-size:0.82rem;transition:color 0.2s}
+.footer-links a:hover{color:var(--white)}
+.footer-copy{font-size:0.75rem;color:var(--muted)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp 0.4s ease both}
+
+@media(max-width:768px){
+  .analytics-grid{grid-template-columns:1fr}
+  .analytics-full{grid-column:1}
+  .strat-grid{grid-template-columns:1fr}
+  .table-head,.trade-row{grid-template-columns:1.5fr 0.7fr 0.8fr 0.5fr 0.6fr}
+  .table-head span:nth-child(6),.table-head span:nth-child(7),.trade-row .cell-6,.trade-row .cell-7{display:none}
+  nav{padding:1rem 1.25rem}
+  .nav-links{display:none}
+  .page{padding:6rem 1.25rem 3rem}
+}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="/" class="nav-logo">🦞 CLAW<span class="acc">MIMOTO</span></a>
+  <ul class="nav-links">
+    <li><a href="/#how">Protocol</a></li>
+    <li><a href="/#sessions">Sessions</a></li>
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/dashboard.html" class="active">Dashboard</a></li>
+    <li><a href="/#findus">Find Us</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+    <a href="https://t.me/RightclawTrade" class="nav-btn" target="_blank">📡 Join Channel →</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="dash-header fade-up">
+    <div class="dash-chip"><span class="chip-dot"></span>MOCK MODE · LIVE DATA · BYBIT PERPETUALS</div>
+    <h1 class="dash-h1">MOCK DASHBOARD</h1>
+    <p class="dash-sub">Clawmimoto ICT/SMC · DeepSeek L1/L2/L3 · <span id="trade-count">—</span> closed trades</p>
+  </div>
+
+  <!-- Tab bar -->
+  <div class="tab-bar">
+    <button class="tab active" onclick="setTab('overview')">Overview</button>
+    <button class="tab" onclick="setTab('history')">History</button>
+    <button class="tab" onclick="setTab('analytics')">Analytics</button>
+    <button class="tab" onclick="setTab('strategy')">Strategy</button>
+  </div>
+
+  <!-- Overview tab -->
+  <div id="tab-overview" class="fade-up">
+    <div class="stat-grid" id="stat-grid">
+      <div class="stat-card"><div class="stat-label">💰 Total P&L</div><div class="stat-value c-teal" id="s-pnl">—</div><div class="stat-sub" id="s-abs">—</div></div>
+      <div class="stat-card"><div class="stat-label">🎯 Win Rate</div><div class="stat-value c-gold" id="s-wr">—</div><div class="stat-sub" id="s-wl">—</div></div>
+      <div class="stat-card"><div class="stat-label">🏆 Best Trade</div><div class="stat-value c-teal" id="s-best">—</div></div>
+      <div class="stat-card"><div class="stat-label">📉 Worst Trade</div><div class="stat-value c-red" id="s-worst">—</div></div>
+      <div class="stat-card"><div class="stat-label">⚡ Avg Win</div><div class="stat-value c-blue" id="s-avgwin">—</div></div>
+      <div class="stat-card"><div class="stat-label">⏱️ Avg Duration</div><div class="stat-value c-purple" id="s-dur">—</div></div>
+    </div>
+    <div class="glass" style="margin-bottom:1.5rem">
+      <div class="glass-header">📈 Equity Curve</div>
+      <div class="glass-body" style="padding:1rem 1.5rem">
+        <svg class="eq-chart" id="eq-chart" viewBox="0 0 600 100" preserveAspectRatio="none"></svg>
+        <div id="eq-empty" style="display:none;padding:1.5rem;text-align:center;color:var(--text);font-size:0.82rem">Equity curve appears after first closed trade</div>
+      </div>
+    </div>
+    <div class="glass">
+      <div class="glass-header">🕐 Recent Trades</div>
+      <div id="recent-trades"></div>
+      <div style="padding:0.75rem;text-align:center">
+        <button class="filter-btn" onclick="setTab('history')">View All →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- History tab -->
+  <div id="tab-history" style="display:none">
+    <div class="filter-bar">
+      <input class="filter-inp" id="search-inp" placeholder="Search pair, session, exit..." oninput="applyFilters()" style="flex:1;min-width:180px"/>
+      <input class="filter-inp" type="date" id="date-from" onchange="applyFilters()"/>
+      <input class="filter-inp" type="date" id="date-to" onchange="applyFilters()"/>
+      <button class="filter-btn" id="clear-dates" onclick="clearDates()" style="display:none;border-color:rgba(255,77,77,0.3);color:#FF4D4D">✕ Clear</button>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn on" id="f-all" onclick="setFilter('all')">All</button>
+      <button class="filter-btn" id="f-wins" onclick="setFilter('wins')">Wins</button>
+      <button class="filter-btn" id="f-losses" onclick="setFilter('losses')">Losses</button>
+      <div style="margin-left:auto;display:flex;gap:4px">
+        <button class="filter-btn on" id="s-date" onclick="setSort('date')">📅 Date</button>
+        <button class="filter-btn" id="s-pnl" onclick="setSort('pnl')">💰 P&L</button>
+        <button class="filter-btn" id="s-dur" onclick="setSort('dur')">⏱️ Dur</button>
+      </div>
+    </div>
+    <div class="glass">
+      <div class="table-head">
+        <span>Pair</span><span>Session</span><span>P&L</span><span>Lev</span><span>Dur</span><span>Exit</span><span>Closed</span>
+      </div>
+      <div id="history-body"></div>
+    </div>
+    <div class="pagination" id="pagination"></div>
+    <div class="page-info" id="page-info"></div>
+  </div>
+
+  <!-- Analytics tab -->
+  <div id="tab-analytics" style="display:none">
+    <div class="analytics-grid">
+      <div class="glass">
+        <div class="glass-header">📊 By Pair</div>
+        <div class="glass-body" id="by-pair"></div>
+      </div>
+      <div class="glass">
+        <div class="glass-header">🕐 By Session</div>
+        <div class="glass-body" id="by-session"></div>
+      </div>
+      <div class="glass analytics-full">
+        <div class="glass-header">🚪 Exit Reasons</div>
+        <div class="glass-body" id="exit-reasons" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Strategy tab -->
+  <div id="tab-strategy" style="display:none">
+    <div class="stat-grid" style="margin-bottom:1.5rem">
+      <div class="stat-card"><div class="stat-label">🏆 Best</div><div class="stat-value c-teal" id="ss-best">—</div></div>
+      <div class="stat-card"><div class="stat-label">📉 Worst</div><div class="stat-value c-red" id="ss-worst">—</div></div>
+      <div class="stat-card"><div class="stat-label">📊 Trades</div><div class="stat-value c-white" id="ss-total">—</div></div>
+      <div class="stat-card"><div class="stat-label">🎯 Win Rate</div><div class="stat-value c-gold" id="ss-wr">—</div></div>
+    </div>
+    <div class="glass">
+      <div class="glass-header">⚙️ Strategy Config</div>
+      <div class="glass-body">
+        <div class="strat-grid">
+          <div class="strat-row"><span class="strat-key">Strategy</span><span class="strat-val">Clawmimoto ICT/SMC</span></div>
+          <div class="strat-row"><span class="strat-key">Engine</span><span class="strat-val">DeepSeek L1/L2/L3</span></div>
+          <div class="strat-row"><span class="strat-key">Exchange</span><span class="strat-val">Bybit Perpetuals</span></div>
+          <div class="strat-row"><span class="strat-key">Mode</span><span class="strat-val">MOCK (Paper Trading)</span></div>
+          <div class="strat-row"><span class="strat-key">Scan Mode</span><span class="strat-val">SCALP (15m+1H+4H)</span></div>
+          <div class="strat-row"><span class="strat-key">Universe</span><span class="strat-val">Top 15 hot pairs</span></div>
+          <div class="strat-row"><span class="strat-key">Sessions</span><span class="strat-val">Pre-London · London · NY</span></div>
+          <div class="strat-row"><span class="strat-key">Conf Gate</span><span class="strat-val">≥ 0.50</span></div>
+          <div class="strat-row"><span class="strat-key">RRR Gate</span><span class="strat-val">≥ 1.5</span></div>
+          <div class="strat-row"><span class="strat-key">L1</span><span class="strat-val">4H BOS / CHoCH</span></div>
+          <div class="strat-row"><span class="strat-key">L2</span><span class="strat-val">1H OB / FVG proximity</span></div>
+          <div class="strat-row"><span class="strat-key">L3</span><span class="strat-val">15m sweep + StochRSI</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<footer>
+  <div class="footer-logo">🦞 CLAW<span>MIMOTO</span></div>
+  <ul class="footer-links">
+    <li><a href="/#how">Protocol</a></li>
+    <li><a href="/#sessions">Sessions</a></li>
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/#findus">Community</a></li>
+    <li><a href="/dashboard.html">Dashboard</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Clawmimoto · Not financial advice.</div>
+</footer>
+
+<script>
+const SB_URL = 'https://aauypnqsmyxzacchbiya.supabase.co'
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhdXlwbnFzbXl4emFjY2hiaXlhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5Nzg2MDUsImV4cCI6MjA5MjU1NDYwNX0.H8RbnYbUb55jr0RnOVpca2wkYgv_jKs8NuUHjruqWls'
+
+let allTrades = []
+let filtered = []
+let currentPage = 0
+let currentFilter = 'all'
+let currentSort = 'date'
+const PER_PAGE = 20
+
+// ── Theme ──────────────────────────────────────────────────────────────────
+function toggleTheme() {
+  const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'
+  document.documentElement.dataset.theme = t
+  document.querySelector('.theme-btn').textContent = t === 'dark' ? '🌙' : '☀️'
+  localStorage.setItem('theme', t)
+}
+const saved = localStorage.getItem('theme')
+if (saved) { document.documentElement.dataset.theme = saved; document.querySelector('.theme-btn').textContent = saved === 'dark' ? '🌙' : '☀️' }
+
+// ── Tab switching ───────────────────────────────────────────────────────────
+function setTab(name) {
+  ['overview','history','analytics','strategy'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = t === name ? '' : 'none'
+  })
+  document.querySelectorAll('.tab').forEach((b,i) => {
+    b.classList.toggle('active', ['overview','history','analytics','strategy'][i] === name)
+  })
+  if (name === 'history') renderHistory()
+  if (name === 'analytics') renderAnalytics()
+  if (name === 'strategy') renderStrategy()
+}
+
+// ── Fetch ───────────────────────────────────────────────────────────────────
+async function fetchTrades() {
+  const r = await fetch(
+    SB_URL + '/rest/v1/mock_positions?status=eq.closed&order=closed_at.desc&limit=500',
+    { headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY } }
+  )
+  if (!r.ok) return []
+  const rows = await r.json()
+  return rows.map(t => {
+    const dir = t.direction === 'buy' ? 'LONG' : 'SHORT'
+    const pnlAbs = t.realized_pnl || 0
+    const pnlPct = t.entry_price && t.quantity
+      ? pnlAbs / (t.entry_price * t.quantity) * 100
+      : 0
+    const pair = (t.pair || '').replace('USDT','').replace('/','').replace(':','')
+    const durMin = t.opened_at && t.closed_at
+      ? Math.round((new Date(t.closed_at) - new Date(t.opened_at)) / 60000)
+      : null
+    const exitReason = t.stop_loss && pnlAbs < 0 ? 'stop_loss'
+      : t.take_profit && pnlAbs > 0 ? 'take_profit' : 'manual'
+    return { ...t, dir, pnlAbs, pnlPct, pair, durMin, exitReason, session: t.session || 'manual' }
+  })
+}
+
+// ── Formatters ──────────────────────────────────────────────────────────────
+const fmt = (n, d=2) => n == null ? '—' : Number(n).toFixed(d)
+const fmtDate = s => s ? s.slice(0,16).replace('T',' ') : '—'
+const pnlColor = v => v > 0 ? 'c-teal' : v < 0 ? 'c-red' : 'c-white'
+
+// ── Overview ────────────────────────────────────────────────────────────────
+function renderOverview() {
+  const trades = allTrades
+  const wins = trades.filter(t => t.pnlPct > 0)
+  const losses = trades.filter(t => t.pnlPct <= 0)
+  const wr = trades.length ? wins.length / trades.length * 100 : 0
+  const tpnl = trades.reduce((s,t) => s + t.pnlPct, 0)
+  const tabs = trades.reduce((s,t) => s + t.pnlAbs, 0)
+  const aw = wins.length ? wins.reduce((s,t) => s + t.pnlPct, 0) / wins.length : 0
+  const best = trades.length ? Math.max(...trades.map(t => t.pnlPct)) : 0
+  const worst = trades.length ? Math.min(...trades.map(t => t.pnlPct)) : 0
+  const durs = trades.filter(t => t.durMin != null).map(t => t.durMin)
+  const avgDur = durs.length ? Math.round(durs.reduce((a,b) => a+b, 0) / durs.length) : 0
+
+  document.getElementById('trade-count').textContent = trades.length
+  const pnlEl = document.getElementById('s-pnl')
+  pnlEl.textContent = (tpnl >= 0 ? '+' : '') + fmt(tpnl) + '%'
+  pnlEl.className = 'stat-value ' + pnlColor(tpnl)
+  document.getElementById('s-abs').textContent = '$' + fmt(tabs) + ' abs'
+  document.getElementById('s-wr').textContent = fmt(wr) + '%'
+  document.getElementById('s-wl').textContent = wins.length + 'W / ' + losses.length + 'L'
+  document.getElementById('s-best').textContent = '+' + fmt(best) + '%'
+  document.getElementById('s-worst').textContent = fmt(worst) + '%'
+  document.getElementById('s-avgwin').textContent = '+' + fmt(aw) + '%'
+  document.getElementById('s-dur').textContent = avgDur + 'm'
+
+  // Equity curve
+  const eq = trades.slice().reverse().reduce((acc,t) => {
+    const p = acc.length ? acc[acc.length-1] : 10000
+    acc.push(p + t.pnlAbs)
+    return acc
+  }, [])
+  const svg = document.getElementById('eq-chart')
+  const eqEmpty = document.getElementById('eq-empty')
+  if (eq.length < 2) { svg.style.display = 'none'; eqEmpty.style.display = ''; }
+  else {
+    svg.style.display = ''; eqEmpty.style.display = 'none'
+    const min = Math.min(...eq), max = Math.max(...eq), range = max - min || 1
+    const W = 600, H = 100
+    const pts = eq.map((v,i) => ((i/(eq.length-1))*W) + ',' + (H - ((v-min)/range)*(H-8) - 4)).join(' ')
+    const col = eq[eq.length-1] >= eq[0] ? 'var(--claw)' : '#FF4D4D'
+    const col2 = eq[eq.length-1] >= eq[0] ? '#FF5500' : '#FF4D4D'
+    svg.innerHTML = `
+      <defs>
+        <linearGradient id="eg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="${col2}" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="${col2}" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <polygon points="0,${H} ${pts} ${W},${H}" fill="url(#eg)"/>
+      <polyline points="${pts}" fill="none" stroke="${col}" stroke-width="2"/>
+    `
+  }
+
+  // Recent trades
+  const recent = document.getElementById('recent-trades')
+  if (!trades.length) {
+    recent.innerHTML = `<div class="empty-state"><div class="empty-icon">🦞</div><div class="empty-title">NO CLOSED TRADES YET</div><div class="empty-sub">Execute and close a MOCK trade in Telegram to see it here</div></div>`
+    return
+  }
+  recent.innerHTML = trades.slice(0,5).map(tradeRowHTML).join('')
+}
+
+// ── Trade row HTML ───────────────────────────────────────────────────────────
+function tradeRowHTML(t) {
+  const won = t.pnlPct > 0
+  return `<div class="trade-row">
+    <div><span class="pair-name">${t.pair}</span><span class="dir-badge ${t.dir === 'LONG' ? 'dir-long' : 'dir-short'}">${t.dir}</span></div>
+    <div class="cell-muted">${t.session || '—'}</div>
+    <div class="pnl-val ${won ? 'c-teal' : 'c-red'}">${won ? '+' : ''}${fmt(t.pnlPct)}%</div>
+    <div class="cell-muted">${t.leverage || 10}x</div>
+    <div class="cell-muted">${t.durMin != null ? t.durMin + 'm' : '—'}</div>
+    <div class="cell-muted cell-6">${(t.exitReason || '').replace(/_/g,' ')}</div>
+    <div class="cell-mono cell-7">${fmtDate(t.closed_at)}</div>
+  </div>`
+}
+
+// ── History ──────────────────────────────────────────────────────────────────
+function applyFilters() {
+  const search = document.getElementById('search-inp').value.toLowerCase()
+  const from = document.getElementById('date-from').value
+  const to = document.getElementById('date-to').value
+  document.getElementById('clear-dates').style.display = (from || to) ? '' : 'none'
+
+  filtered = allTrades.filter(t => {
+    if (currentFilter === 'wins' && t.pnlPct <= 0) return false
+    if (currentFilter === 'losses' && t.pnlPct > 0) return false
+    if (search && !t.pair.toLowerCase().includes(search) && !t.session.includes(search) && !t.exitReason.includes(search)) return false
+    if (from && t.closed_at && t.closed_at < from) return false
+    if (to && t.closed_at && t.closed_at > to + 'T23:59:59') return false
+    return true
+  })
+
+  if (currentSort === 'pnl') filtered.sort((a,b) => b.pnlPct - a.pnlPct)
+  else if (currentSort === 'dur') filtered.sort((a,b) => (a.durMin||0) - (b.durMin||0))
+  else filtered.sort((a,b) => (b.closed_at||'').localeCompare(a.closed_at||''))
+
+  currentPage = 0
+  renderHistory()
+}
+
+function clearDates() {
+  document.getElementById('date-from').value = ''
+  document.getElementById('date-to').value = ''
+  applyFilters()
+}
+
+function setFilter(f) {
+  currentFilter = f
+  ;['all','wins','losses'].forEach(x => document.getElementById('f-'+x).classList.toggle('on', x === f))
+  applyFilters()
+}
+
+function setSort(s) {
+  currentSort = s
+  ;['date','pnl','dur'].forEach(x => {
+    const el = document.getElementById('s-'+x)
+    if (el) el.classList.toggle('on', x === s)
+  })
+  applyFilters()
+}
+
+function renderHistory() {
+  applyFilters()
+  const body = document.getElementById('history-body')
+  const paged = filtered.slice(currentPage * PER_PAGE, (currentPage+1) * PER_PAGE)
+  const totalP = Math.ceil(filtered.length / PER_PAGE)
+
+  if (!filtered.length) {
+    body.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-title">NO TRADES FOUND</div></div>'
+  } else {
+    body.innerHTML = paged.map(tradeRowHTML).join('')
+  }
+
+  // Pagination
+  const pg = document.getElementById('pagination')
+  if (totalP <= 1) { pg.innerHTML = ''; return }
+  let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===0?'disabled':''}>← Prev</button>`
+  const start = Math.max(0, Math.min(currentPage-3, totalP-7))
+  for (let i = start; i < Math.min(start+7, totalP); i++) {
+    html += `<button class="page-btn ${i===currentPage?'on':''}" onclick="goPage(${i})">${i+1}</button>`
+  }
+  html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage>=totalP-1?'disabled':''}>Next →</button>`
+  pg.innerHTML = html
+  document.getElementById('page-info').textContent = `${filtered.length} trades · page ${currentPage+1} of ${totalP}`
+}
+
+function goPage(p) {
+  currentPage = p
+  const body = document.getElementById('history-body')
+  const paged = filtered.slice(p * PER_PAGE, (p+1) * PER_PAGE)
+  body.innerHTML = paged.map(tradeRowHTML).join('')
+  renderHistory()
+}
+
+// ── Analytics ────────────────────────────────────────────────────────────────
+function renderAnalytics() {
+  const trades = allTrades
+
+  // By pair
+  const byPair = {}
+  trades.forEach(t => {
+    if (!byPair[t.pair]) byPair[t.pair] = {n:0,w:0,pnl:0}
+    byPair[t.pair].n++
+    if (t.pnlPct > 0) byPair[t.pair].w++
+    byPair[t.pair].pnl += t.pnlPct
+  })
+  const maxN = Math.max(...Object.values(byPair).map(v => v.n), 1)
+  document.getElementById('by-pair').innerHTML = Object.entries(byPair).sort((a,b) => b[1].n - a[1].n).slice(0,6).map(([p,s]) => `
+    <div class="by-pair-row">
+      <div class="by-pair-header">
+        <span class="by-pair-name">${p}</span>
+        <span class="${pnlColor(s.pnl)}" style="font-family:var(--mono);font-size:0.78rem">${s.pnl>=0?'+':''}${fmt(s.pnl)}%</span>
+      </div>
+      <div class="by-pair-bar-wrap">
+        <div class="by-pair-bar"><div class="by-pair-fill" style="width:${s.n/maxN*100}%"></div></div>
+        <span class="by-pair-count">${s.n}t · ${s.n?Math.round(s.w/s.n*100):0}%WR</span>
+      </div>
+    </div>`).join('') || '<div style="color:var(--text);font-size:0.82rem">No data yet</div>'
+
+  // By session
+  const bySess = {}
+  trades.forEach(t => {
+    const s = t.session || 'manual'
+    if (!bySess[s]) bySess[s] = {n:0,w:0,pnl:0}
+    bySess[s].n++; if (t.pnlPct>0) bySess[s].w++; bySess[s].pnl += t.pnlPct
+  })
+  document.getElementById('by-session').innerHTML = Object.entries(bySess).map(([s,v]) => `
+    <div class="session-row">
+      <div><div class="session-name">${s.replace('_',' ')}</div><div class="session-meta">${v.n} trades · ${v.n?Math.round(v.w/v.n*100):0}% WR</div></div>
+      <span class="${pnlColor(v.pnl)}" style="font-family:var(--mono);font-size:0.85rem;font-weight:700">${v.pnl>=0?'+':''}${fmt(v.pnl)}%</span>
+    </div>`).join('') || '<div style="color:var(--text);font-size:0.82rem">No data yet</div>'
+
+  // Exit reasons
+  const exits = {}
+  trades.forEach(t => { const r = t.exitReason || 'unknown'; exits[r] = (exits[r]||0)+1 })
+  document.getElementById('exit-reasons').innerHTML = Object.entries(exits).sort((a,b)=>b[1]-a[1]).map(([r,n]) => `
+    <div class="exit-tag"><span style="color:var(--text)">${r.replace(/_/g,' ')}</span><span class="c-teal" style="font-family:var(--mono);font-weight:700">${n}</span></div>`).join('') || '<div style="color:var(--text);font-size:0.82rem">No data yet</div>'
+}
+
+// ── Strategy ─────────────────────────────────────────────────────────────────
+function renderStrategy() {
+  const trades = allTrades
+  const wins = trades.filter(t => t.pnlPct > 0)
+  const wr = trades.length ? wins.length/trades.length*100 : 0
+  const best = trades.length ? Math.max(...trades.map(t=>t.pnlPct)) : 0
+  const worst = trades.length ? Math.min(...trades.map(t=>t.pnlPct)) : 0
+  document.getElementById('ss-best').textContent = '+' + fmt(best) + '%'
+  document.getElementById('ss-worst').textContent = fmt(worst) + '%'
+  document.getElementById('ss-total').textContent = trades.length
+  document.getElementById('ss-wr').textContent = fmt(wr) + '%'
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+;(async () => {
+  try {
+    allTrades = await fetchTrades()
+    filtered = [...allTrades]
+  } catch(e) {
+    console.error('Failed to fetch trades', e)
+    allTrades = []
+    filtered = []
+  }
+  renderOverview()
+})()
+</script>
+</body>
+</html>
