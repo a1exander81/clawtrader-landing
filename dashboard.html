@@ -227,9 +227,9 @@ footer{padding:2rem 2.5rem;border-top:1px solid var(--border);display:flex;justi
       <button class="filter-btn" id="f-wins" onclick="setFilter('wins')">Wins</button>
       <button class="filter-btn" id="f-losses" onclick="setFilter('losses')">Losses</button>
       <div style="margin-left:auto;display:flex;gap:4px">
-        <button class="filter-btn on" id="s-date" onclick="setSort('date')">📅 Date</button>
-        <button class="filter-btn" id="s-pnl" onclick="setSort('pnl')">💰 P&L</button>
-        <button class="filter-btn" id="s-dur" onclick="setSort('dur')">⏱️ Dur</button>
+        <button class="filter-btn on" id="sort-date" onclick="setSort('date')">📅 Date</button>
+        <button class="filter-btn" id="sort-pnl" onclick="setSort('pnl')">💰 P&L</button>
+        <button class="filter-btn" id="sort-dur" onclick="setSort('dur')">⏱️ Dur</button>
       </div>
     </div>
     <div class="glass">
@@ -337,7 +337,7 @@ function setTab(name) {
   document.querySelectorAll('.tab').forEach((b,i) => {
     b.classList.toggle('active', ['overview','history','analytics','strategy'][i] === name)
   })
-  if (name === 'history') renderHistory()
+  if (name === 'history') applyFilters()
   if (name === 'analytics') renderAnalytics()
   if (name === 'strategy') renderStrategy()
 }
@@ -515,14 +515,21 @@ function setFilter(f) {
 function setSort(s) {
   currentSort = s
   ;['date','pnl','dur'].forEach(x => {
-    const el = document.getElementById('s-'+x)
+    const el = document.getElementById('sort-'+x)
     if (el) el.classList.toggle('on', x === s)
   })
   applyFilters()
 }
 
 function renderHistory() {
-  applyFilters()
+  // U-DASHBOARD-FIX2-20260703: this used to call applyFilters() here, while
+  // applyFilters() itself calls renderHistory() at its end -- infinite mutual
+  // recursion, RangeError on every single call to either function. Silent
+  // (no try/catch), so History rendered its static header then crashed
+  // before ever writing to history-body -- looked like "blank," was actually
+  // a stack overflow on every load. setTab() now calls applyFilters() instead
+  // of renderHistory() directly to (re)compute filtered before painting;
+  // this function only paints whatever's currently in `filtered`.
   const body = document.getElementById('history-body')
   const paged = filtered.slice(currentPage * PER_PAGE, (currentPage+1) * PER_PAGE)
   const totalP = Math.ceil(filtered.length / PER_PAGE)
