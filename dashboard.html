@@ -304,8 +304,13 @@ footer{padding:2rem 2.5rem;border-top:1px solid var(--border);display:flex;justi
 </footer>
 
 <script>
-const SB_URL = 'https://jvyxzijckmmxuznbgxax.supabase.co'
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp2eXh6aWpja21teHV6bmJneGF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwOTg1MDYsImV4cCI6MjA5MDY3NDUwNn0.Nylw4MHeRyL4u2nrycp9eY8-B4w36PDV1e-0HqZEzIE'
+// U-DASHBOARD-FIX1-20260703: was pointing at a stale/wrong Supabase project
+// (jvyxzijckmmxuznbgxax) -- the bot's real, sole live project is
+// aauypnqsmyxzacchbiya (confirmed against clawforge/mock_engine.py and
+// clawforge/telegram_ui.py). This is the anon/publishable key, safe for
+// client-side use -- never the service-role key the bot uses server-side.
+const SB_URL = 'https://aauypnqsmyxzacchbiya.supabase.co'
+const SB_KEY = 'sb_publishable_nPzrQE9Vb-OGW7n_a0-X3Q_AR0sDg7F'
 
 let allTrades = []
 let filtered = []
@@ -350,25 +355,42 @@ async function resolveToken(token) {
 
 // ── Fetch ───────────────────────────────────────────────────────────────────
 async function fetchTrades(userId) {
+  // U-DASHBOARD-FIX1-20260703: was querying a fictional `mock_positions`
+  // table. Live schema (since U-TRADE-LOG1-20260601 on the bot side) is
+  // ONE unified `trades` table, is_open=false marks a closed row. userId is
+  // accepted for a future per-user filter (queued, see mock_engine.py --
+  // `trades` currently carries no user_id column at all, single-operator
+  // bot for now) but intentionally unused here.
   const r = await fetch(
-    SB_URL + '/rest/v1/mock_positions?user_id=eq.' + userId + '&status=eq.closed&order=closed_at.desc&limit=500',
+    SB_URL + '/rest/v1/trades?is_open=eq.false&order=close_date.desc&limit=500',
     { headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY } }
   )
   if (!r.ok) return []
   const rows = await r.json()
   return rows.map(t => {
-    const dir = t.direction === 'buy' ? 'LONG' : 'SHORT'
-    const pnlAbs = t.realized_pnl || 0
-    const pnlPct = t.entry_price && t.quantity
-      ? pnlAbs / (t.entry_price * t.quantity) * 100
-      : 0
-    const pair = (t.pair || '').replace('USDT','').replace('/','').replace(':','')
-    const durMin = t.opened_at && t.closed_at
-      ? Math.round((new Date(t.closed_at) - new Date(t.opened_at)) / 60000)
+    // direction is already 'LONG'/'SHORT' text on the real row (not 'buy'/'sell')
+    const dir = t.direction === 'SHORT' ? 'SHORT' : 'LONG'
+    const pnlAbs = t.profit_abs || 0
+    // profit_ratio is pre-computed server-side (gross / stake, leverage-aware);
+    // there is no `quantity` column to re-derive this from client-side.
+    const pnlPct = t.profit_ratio != null ? t.profit_ratio * 100 : 0
+    // U-DASHBOARD-FIX1-20260703: .replace(string) only strips the FIRST
+    // match in JS -- real pair values are Bybit futures format
+    // "ETH/USDT:USDT" (settle currency included), which has USDT twice.
+    // The old single .replace('USDT','') left "ETHUSDT" instead of "ETH".
+    // Global regex strips both.
+    const pair = (t.pair || '').replace(/USDT|\/|:/g, '')
+    const durMin = t.open_date && t.close_date
+      ? Math.round((new Date(t.close_date) - new Date(t.open_date)) / 60000)
       : null
-    const exitReason = t.stop_loss && pnlAbs < 0 ? 'stop_loss'
-      : t.take_profit && pnlAbs > 0 ? 'take_profit' : 'manual'
-    return { ...t, dir, pnlAbs, pnlPct, pair, durMin, exitReason, session: t.session || 'manual' }
+    // exit_reason is already a real column server-side (e.g. 'trailing_stop_loss',
+    // 'take_profit', 'manual') -- no need to guess it from stop/target fields
+    // that don't exist on this table.
+    const exitReason = t.exit_reason || 'manual'
+    // aliased so the rest of the page (renderHistory filters/sort/cells,
+    // which read t.closed_at) keeps working unchanged.
+    return { ...t, dir, pnlAbs, pnlPct, pair, durMin, exitReason, session: t.session || 'manual',
+             opened_at: t.open_date, closed_at: t.close_date }
   })
 }
 
