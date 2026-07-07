@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Clawmimoto — SMC trading signals in Telegram</title>
+
+  <!-- U-JOIN-OG1-20260707: OG tags fix the X/Telegram image-preview gap.
+       X share intents cannot attach media; the preview is scraped from
+       these tags on the linked page. URLs must stay ABSOLUTE. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Clawmimoto">
+  <meta property="og:title" content="Clawmimoto — SMC trading signals in Telegram">
+  <meta property="og:description" content="Live MOCK-verified setups, Living Cards, and transparent P&amp;L. Tap to open the bot in Telegram.">
+  <meta property="og:url" content="https://clawtrader-landing.vercel.app/join">
+  <meta property="og:image" content="https://clawtrader-landing.vercel.app/assets/og-join.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Clawmimoto — SMC trading signals in Telegram">
+  <meta name="twitter:description" content="Live MOCK-verified setups, Living Cards, and transparent P&amp;L. Tap to open the bot in Telegram.">
+  <meta name="twitter:image" content="https://clawtrader-landing.vercel.app/assets/og-join.jpg">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      background: radial-gradient(1200px 700px at 70% 30%, #10201b 0%, #0a0d10 55%, #07090b 100%);
+      color: #e8ecea;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      max-width: 460px; width: 100%;
+      text-align: center;
+      padding: 40px 28px;
+      border: 1px solid rgba(29,158,117,.25);
+      border-radius: 16px;
+      background: rgba(10,14,13,.55);
+      backdrop-filter: blur(6px);
+    }
+    .card img.hero { width: 210px; height: auto; margin-bottom: 18px; }
+    h1 { font-size: 26px; font-weight: 600; margin-bottom: 10px; letter-spacing: .2px; }
+    p.sub { color: #9fb3ab; font-size: 15px; line-height: 1.55; margin-bottom: 26px; }
+    .ref-badge {
+      display: none;
+      margin: 0 auto 22px auto;
+      padding: 6px 14px; width: fit-content;
+      font-size: 13px; letter-spacing: 1px;
+      color: #5dcaa5; border: 1px solid rgba(93,202,165,.4);
+      border-radius: 999px; background: rgba(29,158,117,.08);
+    }
+    a.cta {
+      display: inline-block;
+      padding: 15px 34px;
+      font-size: 17px; font-weight: 600; text-decoration: none;
+      color: #06110d; background: #5dcaa5;
+      border-radius: 12px;
+      transition: transform .12s ease, background .12s ease;
+    }
+    a.cta:hover { transform: translateY(-1px); background: #74dcb8; }
+    p.fine {
+      margin-top: 26px; font-size: 12px; color: #66756f; line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <img class="hero" src="/assets/claw-hero.png" alt="Clawmimoto claw mascot holding a green candlestick">
+    <h1>Trade smarter with Clawmimoto</h1>
+    <p class="sub">SMC-based setups, Living Cards, and fully transparent MOCK-verified P&amp;L — all inside Telegram.</p>
+    <div class="ref-badge" id="refBadge"></div>
+    <a class="cta" id="tgBtn" href="https://t.me/Clawmimoto_bot?start=profit">Open in Telegram</a>
+    <p class="fine">Trading involves substantial risk. Performance shown is from a simulated (MOCK) account. Nothing here is financial advice.</p>
+  </main>
+  <script>
+    // U-JOIN-OG1-20260707: ?ref=CODE -> t.me deep link ?start=ref_CODE
+    // (same payload format start() already parses). Sanitized to the
+    // referral code alphabet; anything else falls back to start=profit.
+    (function () {
+      var raw = new URLSearchParams(location.search).get('ref') || '';
+      var code = raw.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
+      if (code.length >= 4) {
+        document.getElementById('tgBtn').href =
+          'https://t.me/Clawmimoto_bot?start=ref_' + code;
+        var b = document.getElementById('refBadge');
+        b.textContent = 'INVITED \u00b7 CODE ' + code;
+        b.style.display = 'block';
+      }
+    })();
+  </script>
+</body>
+</html>
