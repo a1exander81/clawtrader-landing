@@ -358,11 +358,11 @@ async function fetchTrades(userId) {
   // U-DASHBOARD-FIX1-20260703: was querying a fictional `mock_positions`
   // table. Live schema (since U-TRADE-LOG1-20260601 on the bot side) is
   // ONE unified `trades` table, is_open=false marks a closed row. userId is
-  // accepted for a future per-user filter (queued, see mock_engine.py --
-  // `trades` currently carries no user_id column at all, single-operator
-  // bot for now) but intentionally unused here.
+  // U-DASHBOARD-USERSCOPE1-20260707: user_id column now live (U-USERID1 on
+  // the bot side, 74 rows backfilled); userId from resolveToken() now
+  // scopes the fetch -- each dashboard token sees only its owner's trades.
   const r = await fetch(
-    SB_URL + '/rest/v1/trades?is_open=eq.false&order=close_date.desc&limit=500',
+    SB_URL + '/rest/v1/trades?is_open=eq.false&user_id=eq.' + encodeURIComponent(userId) + '&order=close_date.desc&limit=500',  // U-DASHBOARD-USERSCOPE1-20260707
     { headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY } }
   )
   if (!r.ok) return []
