@@ -1,5 +1,12 @@
 {
   "rewrites": [
-    { "source": "/join", "destination": "/join.html" }
+    {
+      "source": "/join",
+      "destination": "/join.html"
+    },
+    {
+      "source": "/p/:token",
+      "destination": "/pnl.html"
+    }
   ]
 }

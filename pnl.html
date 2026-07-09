@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clawmimoto — Live P&L</title>
+<meta name="description" content="Live MOCK trading performance, straight from the Clawmimoto engine.">
+<!-- U-SHARETOKEN1-20260709: public P&L page. Served at /p/<token> via vercel.json rewrite. -->
+<meta property="og:title" content="Clawmimoto — Live P&L">
+<meta property="og:description" content="Live MOCK trading performance, straight from the Clawmimoto engine.">
+<meta property="og:image" content="https://clawtrader-landing.vercel.app/assets/og-join.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF5500;
+    --bg: #0B0B0D;
+    --panel: rgba(255, 255, 255, 0.045);
+    --panel-border: rgba(255, 255, 255, 0.09);
+    --text: #F2F0EC;
+    --muted: rgba(242, 240, 236, 0.55);
+    --green: #2BD576;
+    --red: #FF4757;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 20px 48px;
+    background-image: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255, 85, 0, 0.13), transparent);
+  }
+  .brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .brand span { color: var(--orange); }
+  .mock-badge {
+    margin-top: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--orange);
+    border: 1px solid var(--orange);
+    border-radius: 999px;
+    padding: 4px 14px;
+  }
+  main { width: 100%; max-width: 560px; margin-top: 36px; text-align: center; }
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .pnl {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800;
+    font-size: clamp(52px, 14vw, 88px);
+    line-height: 1.05;
+    margin-top: 10px;
+    letter-spacing: -2px;
+  }
+  .pnl.pos { color: var(--green); }
+  .pnl.neg { color: var(--red); }
+  .pnl-unit {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 2px;
+  }
+  .buckets {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 30px;
+  }
+  .buckets button {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--muted);
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 999px;
+    padding: 7px 15px;
+    cursor: pointer;
+    transition: color .15s, border-color .15s;
+  }
+  .buckets button:hover { color: var(--text); }
+  .buckets button:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+  .buckets button.active {
+    color: var(--orange);
+    border-color: var(--orange);
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 30px;
+    text-align: left;
+  }
+  .stat {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    backdrop-filter: blur(8px);
+  }
+  .stat .label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .stat .value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 6px;
+  }
+  .stat .value.pos { color: var(--green); }
+  .stat .value.neg { color: var(--red); }
+  .state {
+    margin-top: 40px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .cta {
+    display: inline-block;
+    margin-top: 38px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: #0B0B0D;
+    background: var(--orange);
+    border-radius: 10px;
+    padding: 13px 30px;
+    text-decoration: none;
+    transition: transform .15s;
+  }
+  .cta:hover { transform: translateY(-2px); }
+  .cta:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+  .disclaimer {
+    margin-top: 34px;
+    max-width: 460px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .hidden { display: none; }
+  @media (max-width: 420px) {
+    .stats { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cta { transition: none; }
+    .buckets button { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <a class="brand" href="/">CLAW<span>TRADER</span></a>
+  <div class="mock-badge">MOCK ACCOUNT — SIMULATED FILLS</div>
+
+  <main>
+    <div id="content" class="hidden">
+      <div class="eyebrow" id="periodLabel">All time</div>
+      <div class="pnl" id="pnl">—</div>
+      <div class="pnl-unit">NET P&amp;L · USDT</div>
+
+      <div class="buckets" id="buckets" role="tablist" aria-label="Time period">
+        <button data-b="ALL" class="active">ALL</button>
+        <button data-b="1D">1D</button>
+        <button data-b="1W">1W</button>
+        <button data-b="1M">1M</button>
+        <button data-b="3M">3M</button>
+        <button data-b="6M">6M</button>
+        <button data-b="9M">9M</button>
+        <button data-b="1Y">1Y</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="label">Win rate</div><div class="value" id="winRate">—</div></div>
+        <div class="stat"><div class="label">Trades</div><div class="value" id="tradeCount">—</div></div>
+        <div class="stat"><div class="label">Best trade</div><div class="value pos" id="bestTrade">—</div></div>
+        <div class="stat"><div class="label">Worst trade</div><div class="value neg" id="worstTrade">—</div></div>
+      </div>
+      <div class="stats" style="grid-template-columns: 1fr;">
+        <div class="stat"><div class="label">Days active</div><div class="value" id="daysActive">—</div></div>
+      </div>
+    </div>
+
+    <div id="loading" class="state">Loading live numbers…</div>
+    <div id="empty" class="state hidden">No closed trades in this period yet. Try a wider window.</div>
+    <div id="invalid" class="state hidden">This link isn't active. Ask the sender for a fresh one, or meet the bot directly below.</div>
+
+    <a class="cta" href="https://t.me/RightclawTrade">JOIN THE CHANNEL</a>
+
+    <p class="disclaimer">
+      Every number on this page comes from a simulated (MOCK) account — no real
+      funds are traded. Past simulated performance does not predict future
+      results and nothing here is financial advice.
+    </p>
+  </main>
+
+<script>
+// Same Supabase project + anon (publishable) key as dashboard.html — safe to
+// expose; the RPC is SECURITY DEFINER with anon EXECUTE only and returns
+// aggregates, never raw trade rows.
+const SB_URL = 'https://aauypnqsmyxzacchbiya.supabase.co';
+const SB_KEY = 'sb_publishable_nPzrQE9Vb-OGW7n_a0-X3Q_AR0sDg7F';
+
+const token = (location.pathname.match(/^\/p\/([A-Za-z0-9-]+)/) || [])[1] || '';
+const els = id => document.getElementById(id);
+const fmt = n => (n >= 0 ? '+' : '') + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+const PERIOD_NAMES = { ALL: 'All time', '1D': 'Last day', '1W': 'Last week', '1M': 'Last month',
+                       '3M': 'Last 3 months', '6M': 'Last 6 months', '9M': 'Last 9 months', '1Y': 'Last year' };
+
+function show(state) {
+  ['loading', 'empty', 'invalid'].forEach(s => els(s).classList.toggle('hidden', s !== state));
+  els('content').classList.toggle('hidden', !(state === 'content' || state === 'empty'));
+  if (state === 'content') els('empty').classList.add('hidden');
+}
+
+async function load(bucket) {
+  els('periodLabel').textContent = PERIOD_NAMES[bucket] || bucket;
+  try {
+    const r = await fetch(SB_URL + '/rest/v1/rpc/public_pnl_summary', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY },
+      body: JSON.stringify({ p_share_token: token, p_bucket: bucket })
+    });
+    const rows = r.ok ? await r.json() : [];
+    if (!rows.length) {
+      // Distinguish dead link from empty period: ALL returning nothing = dead link.
+      show(bucket === 'ALL' ? 'invalid' : 'empty');
+      return;
+    }
+    const d = rows[0];
+    if (bucket === 'ALL' && !d.trade_count) { show('invalid'); return; }
+    const pnl = Number(d.total_pnl || 0);
+    els('pnl').textContent = fmt(pnl);
+    els('pnl').className = 'pnl ' + (pnl >= 0 ? 'pos' : 'neg');
+    els('winRate').textContent = Number(d.win_rate || 0).toFixed(1) + '%';
+    els('tradeCount').textContent = d.trade_count ?? 0;
+    els('bestTrade').textContent = fmt(d.best_trade || 0);
+    els('worstTrade').textContent = fmt(d.worst_trade || 0);
+    els('daysActive').textContent = d.days_active ?? 0;
+    show('content');
+  } catch (e) {
+    show('invalid');
+  }
+}
+
+document.getElementById('buckets').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  document.querySelectorAll('.buckets button').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  load(b.dataset.b);
+});
+
+if (!token) { show('invalid'); } else { load('ALL'); }
+</script>
+</body>
+</html>
