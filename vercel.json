@@ -7,6 +7,10 @@
     {
       "source": "/p/:token",
       "destination": "/pnl.html"
+    },
+    {
+      "source": "/chart/:symbol",
+      "destination": "/chart.html"
     }
   ]
 }
