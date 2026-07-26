@@ -113,6 +113,8 @@
     background: var(--panel);
     position: relative;
   }
+  #chart-wrap.accent-long { border-color: rgba(43, 213, 118, 0.4); }
+  #chart-wrap.accent-short { border-color: rgba(255, 71, 87, 0.4); }
   #chart-state {
     position: absolute;
     inset: 0;
@@ -246,6 +248,7 @@
     const badge = els('dirBadge');
     badge.textContent = dir;
     badge.className = 'dir-badge ' + dir.toLowerCase();
+    els('chart-wrap').classList.add('accent-' + dir.toLowerCase());
   }
 
   const hasLevels = [entry, sl, tp].every(v => Number.isFinite(v));
@@ -289,8 +292,9 @@
 
   function drawLevels() {
     if (!hasLevels || !series) return;
+    const entryColor = dir === 'LONG' ? '#9FE8C0' : dir === 'SHORT' ? '#FFB3B3' : '#F2F0EC';
     series.createPriceLine({
-      price: entry, color: '#F2F0EC', lineWidth: 1,
+      price: entry, color: entryColor, lineWidth: 1,
       lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: 'Entry',
     });
     series.createPriceLine({
