@@ -29,7 +29,23 @@ module.exports = async (req, res) => {
 
   try {
     const r = await fetch(url);
-    const data = await r.json();
+    const rawText = await r.text();
+
+    // U-KLINES-DIAG1-20260727: parse manually instead of r.json() so a
+    // non-JSON response (e.g. a block/challenge page from Bybit's edge,
+    // seen from Vercel's egress IPs) surfaces the actual status + body
+    // instead of just a JSON.parse error message with no context.
+    let data;
+    try {
+      data = JSON.parse(rawText);
+    } catch (parseErr) {
+      res.status(502).json({
+        error: 'bybit_bad_json',
+        status: r.status,
+        detail: rawText.slice(0, 300),
+      });
+      return;
+    }
 
     if (data.retCode !== 0 || !data.result || !Array.isArray(data.result.list)) {
       res.status(502).json({ error: 'bybit_error', detail: data.retMsg || 'no data' });
