@@ -17,5 +17,6 @@
     "api/chart.js": {
       "includeFiles": "chart.html"
     }
-  }
+  },
+  "regions": ["sin1"]
 }
