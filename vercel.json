@@ -10,7 +10,12 @@
     },
     {
       "source": "/chart/:symbol",
-      "destination": "/chart.html"
+      "destination": "/api/chart"
     }
-  ]
+  ],
+  "functions": {
+    "api/chart.js": {
+      "includeFiles": "chart.html"
+    }
+  }
 }
