@@ -196,7 +196,7 @@ footer{padding:2rem 2.5rem;border-top:1px solid var(--border);display:flex;justi
       <div class="stat-card"><div class="stat-label">🏆 Best Trade</div><div class="stat-value c-teal" id="s-best">—</div></div>
       <div class="stat-card"><div class="stat-label">📉 Worst Trade</div><div class="stat-value c-red" id="s-worst">—</div></div>
       <div class="stat-card"><div class="stat-label">⚡ Avg Win</div><div class="stat-value c-blue" id="s-avgwin">—</div></div>
-      <div class="stat-card"><div class="stat-label">⏱️ Avg Duration</div><div class="stat-value c-purple" id="s-dur">—</div></div>
+      <div class="stat-card"><div class="stat-label">⏱️ Median Duration</div><div class="stat-value c-purple" id="s-dur">—</div></div>
     </div>
     <div class="glass" style="margin-bottom:1.5rem">
       <div class="glass-header">📈 Equity Curve</div>
@@ -366,7 +366,7 @@ async function fetchTrades(userId) {
   // the bot side, 74 rows backfilled); userId from resolveToken() now
   // scopes the fetch -- each dashboard token sees only its owner's trades.
   const r = await fetch(
-    SB_URL + '/rest/v1/trades?is_open=eq.false&user_id=eq.' + encodeURIComponent(userId) + '&order=close_date.desc&limit=500',  // U-DASHBOARD-USERSCOPE1-20260707
+    SB_URL + '/rest/v1/trades?is_open=eq.false&user_id=eq.' + encodeURIComponent(userId) + '&mode=eq.livingcard&order=close_date.desc&limit=500',  // U-DASHBOARD-USERSCOPE1-20260707
     { headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY } }
   )
   if (!r.ok) return []
@@ -420,8 +420,12 @@ function renderOverview() {
   const aw = wins.length ? wins.reduce((s,t) => s + t.pnlPct, 0) / wins.length : 0
   const best = trades.length ? Math.max(...trades.map(t => t.pnlPct)) : 0
   const worst = trades.length ? Math.min(...trades.map(t => t.pnlPct)) : 0
-  const durs = trades.filter(t => t.durMin != null).map(t => t.durMin)
-  const avgDur = durs.length ? Math.round(durs.reduce((a,b) => a+b, 0) / durs.length) : 0
+  const durs = trades.filter(t => t.durMin != null).map(t => t.durMin).sort((a,b) => a-b)
+  const medDur = durs.length
+    ? (durs.length % 2
+        ? durs[(durs.length - 1) / 2]
+        : Math.round((durs[durs.length/2 - 1] + durs[durs.length/2]) / 2))
+    : 0
 
   document.getElementById('trade-count').textContent = trades.length
   const pnlEl = document.getElementById('s-pnl')
@@ -433,7 +437,7 @@ function renderOverview() {
   document.getElementById('s-best').textContent = '+' + fmt(best) + '%'
   document.getElementById('s-worst').textContent = fmt(worst) + '%'
   document.getElementById('s-avgwin').textContent = '+' + fmt(aw) + '%'
-  document.getElementById('s-dur').textContent = avgDur + 'm'
+  document.getElementById('s-dur').textContent = medDur + 'm'
 
   // Equity curve
   const eq = trades.slice().reverse().reduce((acc,t) => {
