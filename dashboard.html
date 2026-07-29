@@ -318,6 +318,10 @@ let currentPage = 0
 let currentFilter = 'all'
 let currentSort = 'date'
 const PER_PAGE = 20
+// U-DASHBOARD-PNLFIX1: matches MockEngine's dry_run_wallet seed (config.json /
+// mock_engine.py). Total P&L % must be measured against this, not summed from
+// per-trade profit_ratio -- see renderOverview() for why that was wrong.
+const STARTING_CAPITAL = 10000
 
 // ── Theme ──────────────────────────────────────────────────────────────────
 function toggleTheme() {
@@ -405,8 +409,14 @@ function renderOverview() {
   const wins = trades.filter(t => t.pnlPct > 0)
   const losses = trades.filter(t => t.pnlPct <= 0)
   const wr = trades.length ? wins.length / trades.length * 100 : 0
-  const tpnl = trades.reduce((s,t) => s + t.pnlPct, 0)
   const tabs = trades.reduce((s,t) => s + t.pnlAbs, 0)
+  // U-DASHBOARD-PNLFIX1: was `trades.reduce((s,t) => s + t.pnlPct, 0)` --
+  // summing each trade's own leveraged profit_ratio as if they were additive
+  // percentage points. profit_ratio is gross/stake (per-trade, leverage-aware),
+  // not a portfolio share, so 131 trades each returning double-digit-to-100%+
+  // summed into a nonsense "+2249.99%" headline. Correct measure is total
+  // dollar P&L against the account's actual starting capital.
+  const tpnl = (tabs / STARTING_CAPITAL) * 100
   const aw = wins.length ? wins.reduce((s,t) => s + t.pnlPct, 0) / wins.length : 0
   const best = trades.length ? Math.max(...trades.map(t => t.pnlPct)) : 0
   const worst = trades.length ? Math.min(...trades.map(t => t.pnlPct)) : 0
@@ -427,7 +437,7 @@ function renderOverview() {
 
   // Equity curve
   const eq = trades.slice().reverse().reduce((acc,t) => {
-    const p = acc.length ? acc[acc.length-1] : 10000
+    const p = acc.length ? acc[acc.length-1] : STARTING_CAPITAL
     acc.push(p + t.pnlAbs)
     return acc
   }, [])
