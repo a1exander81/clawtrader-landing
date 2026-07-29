@@ -638,8 +638,15 @@ function renderStrategy() {
   // ── Token auth gate ──────────────────────────────────────────────────────
   const params = new URLSearchParams(window.location.search)
   const token = params.get('token')
+  // U-DASHBOARD-TOKENPERSIST1-20260729: previously, visiting dashboard.html
+  // without a ?token= (e.g. clicking the plain nav "Dashboard" link) always
+  // showed the lock screen, even right after a valid token had been used --
+  // nothing persisted it. Cache in localStorage on first success, fall back
+  // to it when the URL has none.
+  const STORAGE_KEY = 'clawmimoto_dashboard_token'
+  const effectiveToken = token || localStorage.getItem(STORAGE_KEY)
 
-  if (!token) {
+  if (!effectiveToken) {
     document.querySelector('.page').innerHTML = `
       <div style="min-height:60vh;display:flex;align-items:center;justify-content:center">
         <div class="empty-state">
@@ -654,12 +661,14 @@ function renderStrategy() {
   // Resolve token → user_id
   let userId
   try {
-    userId = await resolveToken(token)
+    userId = await resolveToken(effectiveToken)
   } catch(e) {
     console.error('Token resolve failed', e)
   }
 
   if (!userId) {
+    // stale/invalid cached token -- don't keep retrying it forever
+    localStorage.removeItem(STORAGE_KEY)
     document.querySelector('.page').innerHTML = `
       <div style="min-height:60vh;display:flex;align-items:center;justify-content:center">
         <div class="empty-state">
@@ -670,6 +679,9 @@ function renderStrategy() {
       </div>`
     return
   }
+
+  // Success -- remember this token so future plain-nav visits stay authenticated
+  localStorage.setItem(STORAGE_KEY, effectiveToken)
 
   // Fetch this user's trades
   try {
