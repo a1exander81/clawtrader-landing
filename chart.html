@@ -186,6 +186,37 @@
   @media (max-width: 480px) {
     .levels { grid-template-columns: 1fr; }
   }
+  /* U-POSCHART1-20260729: pulsing dot fixed at the Entry price level, color
+     reflects live P&L favorability (green) or not (red) relative to entry. */
+  #entryPulse {
+    position: absolute;
+    left: 14px;
+    width: 14px;
+    height: 14px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 5;
+    display: none;
+  }
+  #entryPulse .pulse-core {
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  #entryPulse .pulse-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    animation: pulse-ring-anim 1.6s ease-out infinite;
+  }
+  #entryPulse.pulse-green { color: var(--green); }
+  #entryPulse.pulse-red { color: var(--red); }
+  @keyframes pulse-ring-anim {
+    0%   { transform: scale(0.6); opacity: 0.9; }
+    100% { transform: scale(2.2); opacity: 0; }
+  }
 </style>
 </head>
 <body>
@@ -228,8 +259,7 @@
     </p>
   </main>
 
-<script>
-(function () {
+<script>(function () {
   const symbol = (location.pathname.match(/^\/chart\/([A-Za-z0-9]+)/) || [])[1] || '';
   const qs = new URLSearchParams(location.search);
   const entry = parseFloat(qs.get('entry'));
@@ -270,6 +300,29 @@
   }
 
   let chart, series;
+  let currentCandles = [];
+
+  // U-CHARTSCALE1-20260729: compute the vertical price range from ONLY the
+  // candles currently in the visible time window, ignoring price lines
+  // (Entry/SL/TP) entirely. Fixes zooming into a narrow time range staying
+  // stretched to always include a distant TP/SL -- this replaces the
+  // library's own autoscale calculation outright rather than relying on
+  // whatever it does or doesn't include by default.
+  function computeVisibleRange() {
+    if (!chart || !currentCandles.length) return null;
+    const visibleRange = chart.timeScale().getVisibleRange();
+    if (!visibleRange) return null;
+    const visible = currentCandles.filter(c => c.time >= visibleRange.from && c.time <= visibleRange.to);
+    if (!visible.length) return null;
+    let min = Infinity;
+    let max = -Infinity;
+    for (const c of visible) {
+      if (c.low < min) min = c.low;
+      if (c.high > max) max = c.high;
+    }
+    if (!Number.isFinite(min) || !Number.isFinite(max)) return null;
+    return { priceRange: { minValue: min, maxValue: max } };
+  }
 
   function initChart() {
     const wrap = els('chart-wrap');
@@ -287,7 +340,12 @@
       upColor: '#2BD576', downColor: '#FF4757',
       borderVisible: false,
       wickUpColor: '#2BD576', wickDownColor: '#FF4757',
+      autoscaleInfoProvider: computeVisibleRange,
     });
+    // U-POSCHART1-20260729: entry pulse's on-screen Y shifts whenever the
+    // vertical scale changes (zoom/pan), even though entry itself never
+    // moves -- reposition on every visible-range change.
+    chart.timeScale().subscribeVisibleTimeRangeChange(positionEntryPulse);
   }
 
   function drawLevels() {
@@ -307,6 +365,64 @@
     });
   }
 
+  // U-POSCHART1-20260729: pulsing dot fixed at the Entry price level. Color
+  // reflects whether the latest polled price is currently favorable (green)
+  // or unfavorable (red) relative to entry, given direction -- position is
+  // static (entry never moves), color is live (updates as price moves).
+  let latestPrice = null;
+  let pulseEl = null;
+
+  function ensurePulseEl() {
+    if (pulseEl) return pulseEl;
+    pulseEl = document.createElement('div');
+    pulseEl.id = 'entryPulse';
+    pulseEl.innerHTML = '<span class="pulse-core"></span><span class="pulse-ring"></span>';
+    els('chart-wrap').appendChild(pulseEl);
+    return pulseEl;
+  }
+
+  function positionEntryPulse() {
+    if (!hasLevels || !series || !chart) return;
+    const y = series.priceToCoordinate(entry);
+    const el = ensurePulseEl();
+    if (y === null) {
+      el.style.display = 'none';
+      return;
+    }
+    el.style.display = 'block';
+    el.style.top = y + 'px';
+  }
+
+  function updatePulseColor() {
+    if (!hasLevels || latestPrice === null) return;
+    const favorable = dir === 'LONG' ? latestPrice >= entry
+                     : dir === 'SHORT' ? latestPrice <= entry
+                     : null;
+    const el = ensurePulseEl();
+    el.classList.remove('pulse-green', 'pulse-red');
+    el.classList.add(favorable === false ? 'pulse-red' : 'pulse-green');
+  }
+
+  async function pollLatestPrice(interval) {
+    try {
+      const r = await fetch('/api/klines?symbol=' + encodeURIComponent(symbol) + '&interval=' + interval + '&limit=2');
+      const d = await r.json();
+      if (r.ok && d.candles && d.candles.length) {
+        latestPrice = d.candles[d.candles.length - 1].close;
+        updatePulseColor();
+      }
+    } catch (e) {
+      // best-effort -- a failed poll just leaves the last known color/position in place
+    }
+  }
+
+  let pollTimer = null;
+  function startPricePoll(interval) {
+    if (pollTimer) clearInterval(pollTimer);
+    pollLatestPrice(interval);
+    pollTimer = setInterval(() => pollLatestPrice(interval), 10000);
+  }
+
   async function loadCandles(interval) {
     els('chart-state').style.display = 'flex';
     els('chart-state').textContent = 'Loading chart…';
@@ -317,10 +433,15 @@
         els('chart-state').textContent = 'No chart data available for ' + symbol + '.';
         return;
       }
-      if (!chart) initChart();
+      currentCandles = d.candles;
+      if (!chart) {
+        initChart();
+        drawLevels();
+      }
       series.setData(d.candles);
-      drawLevels();
       chart.timeScale().fitContent();
+      positionEntryPulse();
+      startPricePoll(interval);
       els('chart-state').style.display = 'none';
     } catch (e) {
       els('chart-state').textContent = 'Chart failed to load.';
