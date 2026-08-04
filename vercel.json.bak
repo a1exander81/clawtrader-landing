@@ -1,0 +1,21 @@
+{
+  "rewrites": [
+    {
+      "source": "/join",
+      "destination": "/join.html"
+    },
+    {
+      "source": "/p/:token",
+      "destination": "/pnl.html"
+    },
+    {
+      "source": "/chart/:symbol",
+      "destination": "/api/chart"
+    }
+  ],
+  "functions": {
+    "api/chart.js": {
+      "includeFiles": "chart.html"
+    }
+  }
+}

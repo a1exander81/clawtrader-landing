@@ -129,3 +129,190 @@ document.addEventListener("DOMContentLoaded", function(){
     openOnInit: []
   });
 });
+
+/* ── Wallet Connect (multi-provider EVM, EIP-6963 discovery) ──
+   Detects every installed EVM wallet (MetaMask, OKX Wallet, Coinbase Wallet, Rabby,
+   Trust Wallet, etc.) via EIP-6963 announce/request, falls back to legacy
+   window.ethereum / window.ethereum.providers for wallets that haven't adopted 6963.
+   Remembers the chosen wallet by rdns for silent reconnect on reload.
+   Upgrade path: swap for Reown AppKit once REOWN_PROJECT_ID exists, for WalletConnect/mobile. */
+(function(){
+  const btn=document.getElementById("walletBtn")
+  const menu=document.getElementById("walletMenu")
+  const wrap=document.querySelector(".wallet-wrap")
+  if(!btn||!menu||!wrap)return
+
+  const SHORT=a=>a.slice(0,4)+"…"+a.slice(-3)
+  const CONNECTED_KEY="cm-wallet-connected"
+  const RDNS_KEY="cm-wallet-rdns"
+
+  const discovered=new Map()
+  let activeProvider=null
+  let activeAddress=null
+  let hovering=false
+
+  window.addEventListener("eip6963:announceProvider",e=>{
+    const {info,provider}=e.detail
+    discovered.set(info.rdns,{info,provider})
+  })
+  window.dispatchEvent(new Event("eip6963:requestProvider"))
+
+  function legacyList(){
+    const list=[]
+    const eth=window.ethereum
+    if(!eth)return list
+    const tag=p=>p.isMetaMask?{name:"MetaMask",rdns:"io.metamask"}
+      :(p.isOkxWallet||p.isOKExWallet)?{name:"OKX Wallet",rdns:"com.okex.wallet"}
+      :p.isCoinbaseWallet?{name:"Coinbase Wallet",rdns:"com.coinbase.wallet"}
+      :p.isRabby?{name:"Rabby",rdns:"io.rabby"}
+      :p.isTrust?{name:"Trust Wallet",rdns:"com.trustwallet.app"}
+      :{name:"Injected Wallet",rdns:"legacy.unknown"}
+    if(Array.isArray(eth.providers)&&eth.providers.length){
+      eth.providers.forEach(p=>{const t=tag(p);list.push({info:{name:t.name,rdns:t.rdns,icon:null},provider:p})})
+    }else{
+      const t=tag(eth)
+      list.push({info:{name:t.name,rdns:t.rdns,icon:null},provider:eth})
+    }
+    return list
+  }
+
+  function allWallets(){
+    if(discovered.size)return Array.from(discovered.values())
+    return legacyList()
+  }
+
+  function renderIdle(){
+    btn.classList.remove("wallet-connected")
+    btn.textContent="🔗 Connect Wallet"
+  }
+  function renderConnected(){
+    btn.classList.add("wallet-connected")
+    btn.textContent=hovering?"Disconnect":SHORT(activeAddress)
+  }
+  function render(){activeAddress?renderConnected():renderIdle()}
+
+  function disconnect(){
+    activeProvider=null;activeAddress=null;hovering=false
+    localStorage.removeItem(CONNECTED_KEY);localStorage.removeItem(RDNS_KEY)
+    render()
+  }
+
+  async function connectTo(entry){
+    try{
+      const accounts=await entry.provider.request({method:"eth_requestAccounts"})
+      if(accounts&&accounts.length){
+        activeProvider=entry.provider;activeAddress=accounts[0]
+        localStorage.setItem(CONNECTED_KEY,"1");localStorage.setItem(RDNS_KEY,entry.info.rdns)
+        entry.provider.on&&entry.provider.on("accountsChanged",accs=>{
+          if(accs.length){activeAddress=accs[0];render()}
+          else disconnect()
+        })
+        render()
+      }
+    }catch(e){console.warn("wallet connect rejected or failed",e)}
+    closeMenu()
+  }
+
+  function openMenu(){
+    const wallets=allWallets()
+    menu.innerHTML=""
+    if(!wallets.length){
+      const empty=document.createElement("div")
+      empty.className="wallet-menu-empty"
+      empty.textContent="No EVM wallet detected"
+      menu.appendChild(empty)
+      const link=document.createElement("a")
+      link.href="https://metamask.io/download";link.target="_blank"
+      link.className="wallet-menu-item"
+      link.textContent="Install MetaMask →"
+      menu.appendChild(link)
+    }else{
+      wallets.forEach(entry=>{
+        const item=document.createElement("button")
+        item.className="wallet-menu-item";item.type="button"
+        if(entry.info.icon){
+          const img=document.createElement("img")
+          img.src=entry.info.icon;img.alt=""
+          item.appendChild(img)
+        }
+        const label=document.createElement("span")
+        label.textContent=entry.info.name
+        item.appendChild(label)
+        item.addEventListener("click",()=>connectTo(entry))
+        menu.appendChild(item)
+      })
+    }
+    menu.classList.add("open")
+  }
+  function closeMenu(){menu.classList.remove("open")}
+
+  btn.addEventListener("click",()=>{
+    if(activeAddress){disconnect();return}
+    const wallets=allWallets()
+    if(wallets.length===1)connectTo(wallets[0])
+    else menu.classList.contains("open")?closeMenu():openMenu()
+  })
+  btn.addEventListener("mouseenter",()=>{if(activeAddress){hovering=true;render()}})
+  btn.addEventListener("mouseleave",()=>{if(activeAddress){hovering=false;render()}})
+  document.addEventListener("click",e=>{if(!wrap.contains(e.target))closeMenu()})
+
+  async function silentReconnect(){
+    const wasConnected=localStorage.getItem(CONNECTED_KEY)==="1"
+    const savedRdns=localStorage.getItem(RDNS_KEY)
+    if(!wasConnected||!savedRdns)return
+    await new Promise(r=>setTimeout(r,150))
+    const wallets=allWallets()
+    const match=wallets.find(w=>w.info.rdns===savedRdns)||wallets[0]
+    if(!match)return
+    try{
+      const accounts=await match.provider.request({method:"eth_accounts"})
+      if(accounts&&accounts.length){
+        activeProvider=match.provider;activeAddress=accounts[0]
+        match.provider.on&&match.provider.on("accountsChanged",accs=>{
+          if(accs.length){activeAddress=accs[0];render()}
+          else disconnect()
+        })
+        render()
+      }
+    }catch(e){/* ignore silent-reconnect failures */}
+  }
+  render()
+  silentReconnect()
+})()
+
+/* ── Scroll-linked hero parallax (real scroll-tied depth, not just fade-in) ── */
+(function(){
+  const heroGrid=document.querySelector(".hero-grid")
+  const terminal=document.querySelector(".terminal")
+  const hero=document.getElementById("hero")
+  if(!hero)return
+  let ticking=false
+  function applyParallax(){
+    const rect=hero.getBoundingClientRect()
+    const progress=Math.min(1,Math.max(0,-rect.top/(rect.height||1)))
+    if(heroGrid)heroGrid.style.transform=`translateY(${progress*60}px)`
+    if(terminal)terminal.style.transform=`translateY(${progress*-30}px)`
+    ticking=false
+  }
+  window.addEventListener("scroll",()=>{
+    if(!ticking){requestAnimationFrame(applyParallax);ticking=true}
+  },{passive:true})
+  applyParallax()
+})()
+
+/* ── Magnetic button hover (cursor attraction on primary CTAs) ──
+   Bakes in the existing -2px hover lift since setting inline transform
+   here overrides the CSS :hover translateY rule. */
+(function(){
+  document.querySelectorAll(".btn-fill").forEach(b=>{
+    b.addEventListener("mousemove",e=>{
+      const r=b.getBoundingClientRect()
+      const x=(e.clientX-r.left-r.width/2)*0.25
+      const y=(e.clientY-r.top-r.height/2)*0.35
+      b.style.transform=`translate(${x}px,${y-2}px)`
+    })
+    b.addEventListener("mouseleave",()=>{
+      b.style.transform="translate(0,0)"
+    })
+  })
+})()
