@@ -1,0 +1,5 @@
+node_modules/
+*.bak
+*.bak.*
+apply_*.sh
+.DS_Store
