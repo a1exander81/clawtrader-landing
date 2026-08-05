@@ -17,9 +17,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content
 .theme-btn:hover{background:rgba(255,85,0,0.12);border-color:var(--claw)}
 .nav-btn{background:var(--claw);color:white;padding:0.5rem 1.25rem;border-radius:6px;font-weight:600;font-size:0.85rem;text-decoration:none;transition:all 0.2s}
 .nav-btn:hover{background:var(--claw2);transform:translateY(-1px)}
-#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:7rem 2.5rem 4rem;position:relative;overflow:hidden;gap:4rem}
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1.08fr;align-items:center;padding:7rem 2.5rem 4rem;position:relative;overflow:hidden;gap:4rem}
 #wormhole-canvas{position:absolute;inset:0;z-index:0;width:100%;height:100%}
 .hero-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(255,85,0,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,85,0,0.02) 1px,transparent 1px);background-size:80px 80px}
+.hero-glow{position:absolute;top:12%;right:2%;width:44%;height:68%;z-index:1;background:radial-gradient(ellipse at center,rgba(255,85,0,0.22),rgba(255,128,64,0.08) 45%,transparent 72%);filter:blur(70px);pointer-events:none}
 .hero-left{position:relative;z-index:2}.hero-right{position:relative;z-index:2}
 .hero-chip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,85,0,0.08);border:1px solid rgba(255,85,0,0.22);padding:0.35rem 0.9rem;border-radius:100px;font-family:var(--mono);font-size:0.7rem;color:var(--claw2);letter-spacing:0.08em;margin-bottom:1.75rem;animation:fadeUp 0.5s ease both}
 .chip-dot{width:5px;height:5px;border-radius:50%;background:var(--claw);animation:blink 1.5s infinite}
@@ -207,7 +208,7 @@ footer{padding:2.5rem 2.5rem;border-top:1px solid var(--border);display:flex;jus
 html,body{max-width:100%;overflow-x:hidden}
 @media(max-width:900px){
   #hero{grid-template-columns:1fr;padding:5rem 1.25rem 3rem;text-align:center;gap:2rem}
-  .hero-right{display:none}.hero-desc{max-width:100%}.hero-actions{justify-content:center}.hero-numbers{justify-content:center}
+  .hero-right{display:none}.hero-glow{display:none}.hero-desc{max-width:100%}.hero-actions{justify-content:center}.hero-numbers{justify-content:center}
   nav{padding:1rem 1.25rem}.nav-links{display:none}
   .section{padding:4.5rem 1.25rem}#findus{padding:4.5rem 1.25rem}
   .how-grid,.sessions-wrap,.social-cards{grid-template-columns:1fr;gap:1.25rem}

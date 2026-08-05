@@ -221,6 +221,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <section id="hero">
   <canvas id="wormhole-canvas"></canvas>
   <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
   <div class="hero-left">
     <div class="hero-chip"><div class="chip-dot"></div>@Clawmimoto · Live on Bybit Futures</div>
     <h1 class="hero-h1"><span class="dim">TRADE</span><br><span class="hot">LIKE A</span><br><span class="dim">MACHINE</span></h1>
@@ -238,23 +239,23 @@ html,body{max-width:100%;overflow-x:hidden}
     <div class="terminal">
       <div class="terminal-bar"><div class="tbar-dot r"></div><div class="tbar-dot y"></div><div class="tbar-dot g"></div><div class="tbar-title">clawmimoto · scan engine</div></div>
       <div class="terminal-body">
-        <div class="t-line"><span class="t-prompt">❯ </span><span class="t-cmd">clawmimoto scan --session london --ai</span></div>
+        <div class="t-line"><span class="t-prompt">❯ </span><span class="t-cmd">clawmimoto scan --session london</span></div>
         <div class="t-line t-muted">// fetching bybit top movers...</div>
         <div class="t-line t-muted">// filter: vol >$50M · move 2-15% · no memes</div>
-        <div class="t-line t-out">// 6 candidates → scoring with AI...</div>
+        <div class="t-line t-out">// 6 candidates → running SMC checks...</div>
         <div class="scan-card">
-          <div class="scan-head"><div class="scan-pair">BTC/USDT · LONG ↑</div><div class="scan-score">AI 8/10</div></div>
+          <div class="scan-head"><div class="scan-pair">BTC/USDT · LONG ↑</div><div class="scan-score">✅ VALID</div></div>
           <div class="scan-grid">
             <div><div class="sg-lbl">Entry</div><div class="sg-val">$75,420</div></div>
             <div><div class="sg-lbl">SL</div><div class="sg-val dn">$75,117</div></div>
             <div><div class="sg-lbl">TP</div><div class="sg-val up">$76,533</div></div>
             <div><div class="sg-lbl">Leverage</div><div class="sg-val">28x</div></div>
             <div><div class="sg-lbl">RRR</div><div class="sg-val up">3.2:1</div></div>
-            <div><div class="sg-lbl">Conf.</div><div class="sg-val up">88%</div></div>
+            <div><div class="sg-lbl">Liquid</div><div class="sg-val up">$62M</div></div>
           </div>
           <div class="scan-btns"><button class="sb ex">✅ Execute</button><button class="sb sk">⏭ Skip</button></div>
         </div>
-        <div class="t-line t-warn">// clawstrike: 7/8 conditions met</div>
+        <div class="t-line t-warn">// L1 bias ✓ · L2 1H agree ✓ · L3 5m pending</div>
         <div class="t-line t-muted">// volume: 1.8x · waiting for 2x...</div>
         <div class="t-line"><span class="t-prompt">❯ </span><span class="cursor-blink"></span></div>
       </div>
@@ -293,7 +294,6 @@ html,body{max-width:100%;overflow-x:hidden}
     <h2 class="section-h reveal">EVERY EDGE.<br>AUTOMATED.</h2>
     <div class="feat-layout">
       <div class="feat-list">
-        <div class="feat-item glass-card reveal"><div class="feat-icon-wrap">⚡</div><div><h4>ClawStrike</h4><p>One autonomous trade per day. All three SMC layers must align — 4H bias, 1H agreement, 5M confirmation.</p></div></div>
         <div class="feat-item glass-card reveal"><div class="feat-icon-wrap">🎯</div><div><h4>SUTAMM Autonomous Mode</h4><p>Skip the tap. With SUTAMM enabled, qualifying setups execute the moment every gate clears — no confirmation window, nothing missed while you're away.</p></div></div>
         <div class="feat-item glass-card reveal"><div class="feat-icon-wrap">🔍</div><div><h4>Dynamic Scanner</h4><p>Fetches real movers from Bybit. Drop any link — TradingView, X post, exchange URL — the agent extracts the pair and returns a scored setup.</p></div></div>
         <div class="feat-item glass-card reveal"><div class="feat-icon-wrap">🛡️</div><div><h4>Trade Management</h4><p>SL and TP are set on entry. Position is tracked live in Telegram. Close manually or let the bot manage the exit when TP is hit.</p></div></div>
@@ -403,7 +403,7 @@ html,body{max-width:100%;overflow-x:hidden}
       <a href="https://t.me/RightclawTrade" target="_blank" class="social-card glass-card reveal" style="text-decoration:none;color:var(--white)">
         <div class="social-logo-wrap tg-bg"><svg viewBox="0 0 24 24" width="34" height="34" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div>
         <h3>ON TELEGRAM</h3>
-        <p>Live signals, session alerts, ClawStrike notifications, and direct community access. This is where it happens first.</p>
+        <p>Live signals, session alerts, and direct community access. This is where it happens first.</p>
         <span class="social-tag">@RightclawTrade</span>
       </a>
       <div class="social-card glass-card reveal">

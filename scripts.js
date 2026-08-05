@@ -281,17 +281,26 @@ document.addEventListener("DOMContentLoaded", function(){
 })()
 
 /* ── Scroll-linked hero parallax (real scroll-tied depth, not just fade-in) ── */
+/* U-LANDING-PARALLAX2: added .hero-glow background plane for a third depth
+   layer, enlarged the terminal via scale() folded into the same transform
+   string (a separate CSS scale() would be wiped out on the next scroll
+   frame, since .style.transform assignment replaces the whole value), and
+   gated the whole effect behind prefers-reduced-motion. */
 (function(){
   const heroGrid=document.querySelector(".hero-grid")
+  const heroGlow=document.querySelector(".hero-glow")
   const terminal=document.querySelector(".terminal")
   const hero=document.getElementById("hero")
   if(!hero)return
+  const reduceMotion=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  if(reduceMotion)return
   let ticking=false
   function applyParallax(){
     const rect=hero.getBoundingClientRect()
     const progress=Math.min(1,Math.max(0,-rect.top/(rect.height||1)))
     if(heroGrid)heroGrid.style.transform=`translateY(${progress*60}px)`
-    if(terminal)terminal.style.transform=`translateY(${progress*-30}px)`
+    if(heroGlow)heroGlow.style.transform=`translateY(${progress*20}px)`
+    if(terminal)terminal.style.transform=`translateY(${progress*-30}px) scale(1.12)`
     ticking=false
   }
   window.addEventListener("scroll",()=>{
