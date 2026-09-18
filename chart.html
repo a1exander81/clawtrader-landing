@@ -363,6 +363,10 @@
       borderVisible: false,
       wickUpColor: '#2BD576', wickDownColor: '#FF4757',
       autoscaleInfoProvider: computeVisibleRange,
+      // U-CHARTPRECISION1-20260918: axis + price-line labels (Entry/TP/SL/
+      // POC/HVN) inherit this from the series -- without it, low-priced
+      // pairs got rounded to the library's 2-decimal default.
+      priceFormat: { type: 'price', precision: 5, minMove: 0.00001 },
     });
     // U-POSCHART1-20260729: entry pulse's on-screen Y shifts whenever the
     // vertical scale changes (zoom/pan), even though entry itself never
