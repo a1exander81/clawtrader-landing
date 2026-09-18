@@ -27,6 +27,7 @@
     --muted: rgba(242, 240, 236, 0.55);
     --green: #2BD576;
     --red: #FF4757;
+    --gold: #F5C451;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { height: 100%; }
@@ -152,6 +153,7 @@
   .level.entry .value { color: var(--text); }
   .level.tp .value { color: var(--green); }
   .level.sl .value { color: var(--red); }
+  .level.poc .value, .level.hvn .value { color: var(--gold); }
   .rr-chip {
     margin-top: 14px;
     font-family: 'JetBrains Mono', monospace;
@@ -244,6 +246,11 @@
       <div class="level entry"><div class="label">Entry</div><div class="value" id="vEntry">—</div></div>
       <div class="level tp"><div class="label">Take profit</div><div class="value" id="vTp">—</div></div>
       <div class="level sl"><div class="label">Stop loss</div><div class="value" id="vSl">—</div></div>
+      <!-- U-POCCHART1-20260914: POC-strategy-only levels, hidden unless the
+           URL carries poc/hvn_lo/hvn_hi (see chart.html's own script). -->
+      <div class="level poc" id="lvlPoc" style="display:none;"><div class="label">POC</div><div class="value" id="vPoc">—</div></div>
+      <div class="level hvn" id="lvlHvnHi" style="display:none;"><div class="label">HVN high</div><div class="value" id="vHvnHi">—</div></div>
+      <div class="level hvn" id="lvlHvnLo" style="display:none;"><div class="label">HVN low</div><div class="value" id="vHvnLo">—</div></div>
     </div>
     <div class="rr-chip" id="rrChip"></div>
 
@@ -266,6 +273,13 @@
   const sl = parseFloat(qs.get('sl'));
   const tp = parseFloat(qs.get('tp'));
   const dir = (qs.get('dir') || '').toUpperCase();
+  // U-POCCHART1-20260914: POC-strategy-only levels (its volume-profile POC
+  // line + HVN band, the zone price pulls back into before entry) -- present
+  // only on mode=pocvp chart links, absent (NaN) for every other strategy.
+  const poc = parseFloat(qs.get('poc'));
+  const hvnLo = parseFloat(qs.get('hvn_lo'));
+  const hvnHi = parseFloat(qs.get('hvn_hi'));
+  const hasPoc = [poc, hvnLo, hvnHi].every(Number.isFinite);
 
   const els = id => document.getElementById(id);
 
@@ -292,6 +306,14 @@
     if (risk > 0) {
       els('rrChip').textContent = 'R:R ' + (reward / risk).toFixed(2);
     }
+  }
+  if (hasPoc) {
+    els('lvlPoc').style.display = 'block';
+    els('lvlHvnHi').style.display = 'block';
+    els('lvlHvnLo').style.display = 'block';
+    els('vPoc').textContent = poc;
+    els('vHvnHi').textContent = hvnHi;
+    els('vHvnLo').textContent = hvnLo;
   }
 
   if (!symbol) {
@@ -341,6 +363,10 @@
       borderVisible: false,
       wickUpColor: '#2BD576', wickDownColor: '#FF4757',
       autoscaleInfoProvider: computeVisibleRange,
+      // U-CHARTPRECISION1-20260918: axis + price-line labels (Entry/TP/SL/
+      // POC/HVN) inherit this from the series -- without it, low-priced
+      // pairs got rounded to the library's 2-decimal default.
+      priceFormat: { type: 'price', precision: 5, minMove: 0.00001 },
     });
     // U-POSCHART1-20260729: entry pulse's on-screen Y shifts whenever the
     // vertical scale changes (zoom/pan), even though entry itself never
@@ -363,6 +389,23 @@
       price: sl, color: '#FF4757', lineWidth: 2,
       lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: 'SL',
     });
+    if (hasPoc) {
+      // U-POCCHART1-20260914: POC line + the HVN band it triggers pullback
+      // entries out of -- the two hvn lines double as the visual "pullback /
+      // retrace zone" price re-enters before the strategy fires.
+      series.createPriceLine({
+        price: poc, color: '#F5C451', lineWidth: 2,
+        lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: 'POC',
+      });
+      series.createPriceLine({
+        price: hvnHi, color: 'rgba(245, 196, 81, 0.55)', lineWidth: 1,
+        lineStyle: LightweightCharts.LineStyle.Dotted, axisLabelVisible: true, title: 'HVN hi',
+      });
+      series.createPriceLine({
+        price: hvnLo, color: 'rgba(245, 196, 81, 0.55)', lineWidth: 1,
+        lineStyle: LightweightCharts.LineStyle.Dotted, axisLabelVisible: true, title: 'HVN lo',
+      });
+    }
   }
 
   // U-POSCHART1-20260729: pulsing dot fixed at the Entry price level. Color
