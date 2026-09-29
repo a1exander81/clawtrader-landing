@@ -60,6 +60,20 @@
     border-radius: 999px;
     padding: 4px 14px;
   }
+  /* U-CHART-STRATEGYBADGE1-20260929: which strategy filled this position -- hidden (display:none) unless the
+     URL carries a recognized ?strategy=, same fail-closed pattern as the POC/HVN levels below. */
+  .strategy-badge {
+    margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    padding: 4px 14px;
+    display: none;
+  }
   main { width: 100%; max-width: 720px; margin-top: 30px; }
   .head-row {
     display: flex;
@@ -224,6 +238,7 @@
 <body>
   <a class="brand" href="/">CLAW<span>TRADER</span></a>
   <div class="mock-badge">MOCK ACCOUNT — SIMULATED FILLS</div>
+  <div class="strategy-badge" id="strategyBadge"></div>
 
   <main>
     <div class="head-row">
@@ -280,10 +295,23 @@
   const hvnLo = parseFloat(qs.get('hvn_lo'));
   const hvnHi = parseFloat(qs.get('hvn_hi'));
   const hasPoc = [poc, hvnLo, hvnHi].every(Number.isFinite);
+  // U-CHART-STRATEGYBADGE1-20260929: which strategy engine filled this position -- one query param, shared by
+  // every strategy's chart_url()-building call site (Living Card, SUTAMM, QuadRot, Donchian, POC-VP, /poc BingX).
+  // Unrecognized/absent -> no badge, same fail-closed pattern as the POC/HVN levels above.
+  const STRATEGY_LABELS = {
+    smc: 'LIVING CARD', sutamm: 'SUTAMM AUTO-FIRE', quadrot: 'QUADROT', donchian: 'DONCHIAN',
+    pocvp: 'POC-VP', poc_bingx: '/POC (BINGX DEMO)',
+  };
+  const strategyLabel = STRATEGY_LABELS[(qs.get('strategy') || '').toLowerCase()];
 
   const els = id => document.getElementById(id);
 
   els('pairLabel').textContent = symbol || '—';
+  if (strategyLabel) {
+    const b = els('strategyBadge');
+    b.textContent = strategyLabel;
+    b.style.display = 'inline-block';
+  }
   els('tvLink').href = symbol
     ? 'https://www.tradingview.com/chart/?symbol=BYBIT:' + encodeURIComponent(symbol) + '.P'
     : 'https://www.tradingview.com/';
